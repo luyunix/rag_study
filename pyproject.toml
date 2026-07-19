@@ -1,0 +1,10 @@
+[project]
+name = "rag-study"
+version = "0.1.0"
+description = "RAG 系统课程学习笔记与从零实现练习"
+requires-python = ">=3.9"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

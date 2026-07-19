@@ -1,0 +1,14 @@
+.DS_Store
+.idea/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 本地实验产生的数据和模型，不提交到仓库
+data/private/
+models/
+artifacts/
+

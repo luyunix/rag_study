@@ -1,0 +1,808 @@
+{
+  "source": "https://www.bilibili.com/video/BV1fLoKBREGv",
+  "sections": 89,
+  "duration_seconds": 49354,
+  "entries": [
+    {
+      "page": 1,
+      "title": "1-1 全面了解课程，让你少走弯路，必看！！！",
+      "duration_seconds": 654,
+      "duration": "10:54",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=1",
+      "asr_checked": true,
+      "stem": "p001-全面了解课程-让你少走弯路-必看"
+    },
+    {
+      "page": 2,
+      "title": "2-1 本章简介",
+      "duration_seconds": 59,
+      "duration": "00:59",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=2",
+      "asr_checked": true,
+      "stem": "p002-RAG-基础-本章导学"
+    },
+    {
+      "page": 3,
+      "title": "2-2 满足企业精准需求：RAG如何填补大语言模型短板",
+      "duration_seconds": 219,
+      "duration": "03:39",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=3",
+      "asr_checked": true,
+      "stem": "p003-满足企业精准需求-RAG如何填补大语言模型短板"
+    },
+    {
+      "page": 4,
+      "title": "2-3 解锁RAG三大核心",
+      "duration_seconds": 93,
+      "duration": "01:33",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=4",
+      "asr_checked": true,
+      "stem": "p004-解锁RAG三大核心"
+    },
+    {
+      "page": 5,
+      "title": "2-4 深入思考 long context加持的大模型企业还需要RAG",
+      "duration_seconds": 387,
+      "duration": "06:27",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=5",
+      "asr_checked": true,
+      "stem": "p005-深入思考-long-context加持的大模型企业还需要RAG"
+    },
+    {
+      "page": 6,
+      "title": "2-5 RAG技术栈：从【合格】到【优秀】的跨越",
+      "duration_seconds": 163,
+      "duration": "02:43",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=6",
+      "asr_checked": true,
+      "stem": "p006-RAG技术栈-从-合格-到-优秀-的跨越"
+    },
+    {
+      "page": 7,
+      "title": "2-6 本课程案例分析与说明",
+      "duration_seconds": 145,
+      "duration": "02:25",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=7",
+      "asr_checked": true,
+      "stem": "p007-本课程案例分析与说明"
+    },
+    {
+      "page": 8,
+      "title": "3-1 本章简介",
+      "duration_seconds": 101,
+      "duration": "01:41",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=8",
+      "asr_checked": true,
+      "stem": "p008-大模型基础与选型-本章导学"
+    },
+    {
+      "page": 9,
+      "title": "3-2 大模型入门：核心要点和技术演变（Token、Transformer、GPT）",
+      "duration_seconds": 1258,
+      "duration": "20:58",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=9",
+      "asr_checked": true,
+      "stem": "p009-大模型入门-核心要点和技术演变-Token-Transformer-GPT"
+    },
+    {
+      "page": 10,
+      "title": "3-3 国内外大模型产品必知必会",
+      "duration_seconds": 225,
+      "duration": "03:45",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=10",
+      "asr_checked": true,
+      "stem": "p010-国内外大模型产品必知必会"
+    },
+    {
+      "page": 11,
+      "title": "3-4 没有GPU如何调用大模型-大模型调用的三种方式",
+      "duration_seconds": 573,
+      "duration": "09:33",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=11",
+      "asr_checked": true,
+      "stem": "p011-没有GPU如何调用大模型-大模型调用的三种方式"
+    },
+    {
+      "page": 12,
+      "title": "3-5 火眼金星：如何分辨大模型的好坏",
+      "duration_seconds": 358,
+      "duration": "05:58",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=12",
+      "asr_checked": true,
+      "stem": "p012-火眼金星-如何分辨大模型的好坏"
+    },
+    {
+      "page": 13,
+      "title": "3-6 RAG应用：挑选大模型的四大步骤",
+      "duration_seconds": 138,
+      "duration": "02:18",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=13",
+      "asr_checked": true,
+      "stem": "p013-RAG应用-挑选大模型的四大步骤"
+    },
+    {
+      "page": 14,
+      "title": "3-7 总结和展望：不同项目角色需要对AI大模型了解程度的差异性分析",
+      "duration_seconds": 542,
+      "duration": "09:02",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=14",
+      "asr_checked": true,
+      "stem": "p014-总结和展望-不同项目角色需要对AI大模型了解程度的差异性分析"
+    },
+    {
+      "page": 15,
+      "title": "3-11 实战：使用大语言模型（本地和API、GPU和CPU）-1",
+      "duration_seconds": 1059,
+      "duration": "17:39",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=15",
+      "asr_checked": true,
+      "stem": "p015-实战-使用大语言模型-本地和API-GPU和CPU-1"
+    },
+    {
+      "page": 16,
+      "title": "3-12 实战：使用大语言模型（本地和API、GPU和CPU）-2",
+      "duration_seconds": 1123,
+      "duration": "18:43",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=16",
+      "asr_checked": true,
+      "stem": "p016-实战-使用大语言模型-本地和API-GPU和CPU-2"
+    },
+    {
+      "page": 17,
+      "title": "4-1 本章介绍",
+      "duration_seconds": 42,
+      "duration": "00:42",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=17",
+      "asr_checked": true,
+      "stem": "p017-Embedding-本章导学"
+    },
+    {
+      "page": 18,
+      "title": "4-2 embedding模型的重要性",
+      "duration_seconds": 156,
+      "duration": "02:36",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=18",
+      "asr_checked": true,
+      "stem": "p018-embedding模型的重要性"
+    },
+    {
+      "page": 19,
+      "title": "4-3 embedding是怎么炼成的？",
+      "duration_seconds": 308,
+      "duration": "05:08",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=19",
+      "asr_checked": true,
+      "stem": "p019-embedding是怎么炼成的"
+    },
+    {
+      "page": 20,
+      "title": "4-4 主流中文embedding模型",
+      "duration_seconds": 381,
+      "duration": "06:21",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=20",
+      "asr_checked": true,
+      "stem": "p020-主流中文embedding模型"
+    },
+    {
+      "page": 21,
+      "title": "4-5 embedding模型排行榜靠谱不靠谱，如何选择",
+      "duration_seconds": 251,
+      "duration": "04:11",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=21",
+      "asr_checked": true,
+      "stem": "p021-embedding模型排行榜靠谱不靠谱-如何选择"
+    },
+    {
+      "page": 22,
+      "title": "4-7 实战：embedding模型加载和使用对比",
+      "duration_seconds": 1345,
+      "duration": "22:25",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=22",
+      "asr_checked": true,
+      "stem": "p022-实战-embedding模型加载和使用对比"
+    },
+    {
+      "page": 23,
+      "title": "4-8 本章总结",
+      "duration_seconds": 80,
+      "duration": "01:20",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=23",
+      "asr_checked": true,
+      "stem": "p023-Embedding-本章总结"
+    },
+    {
+      "page": 24,
+      "title": "5-1 本章介绍",
+      "duration_seconds": 64,
+      "duration": "01:04",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=24",
+      "asr_checked": true,
+      "stem": "p024-向量数据库-本章导学"
+    },
+    {
+      "page": 25,
+      "title": "5-2 全方位对比：主流向量数据库",
+      "duration_seconds": 709,
+      "duration": "11:49",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=25",
+      "asr_checked": true,
+      "stem": "p025-全方位对比-主流向量数据库"
+    },
+    {
+      "page": 26,
+      "title": "5-3 企业级向量数据库的要求",
+      "duration_seconds": 112,
+      "duration": "01:52",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=26",
+      "asr_checked": true,
+      "stem": "p026-企业级向量数据库的要求"
+    },
+    {
+      "page": 27,
+      "title": "5-4 向量数据库相似性搜索",
+      "duration_seconds": 154,
+      "duration": "02:34",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=27",
+      "asr_checked": true,
+      "stem": "p027-向量数据库相似性搜索"
+    },
+    {
+      "page": 28,
+      "title": "5-5 性能为王：探索向量数据索引优化技术",
+      "duration_seconds": 961,
+      "duration": "16:01",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=28",
+      "asr_checked": true,
+      "stem": "p028-性能为王-探索向量数据索引优化技术"
+    },
+    {
+      "page": 29,
+      "title": "5-6 实战：部署和使用企业级向量数据库（chroma和milvus）-1",
+      "duration_seconds": 896,
+      "duration": "14:56",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=29",
+      "asr_checked": true,
+      "stem": "p029-实战-部署和使用企业级向量数据库-chroma和milvus-1"
+    },
+    {
+      "page": 30,
+      "title": "5-7 实战：部署和使用企业级向量数据库（chroma和milvus）-2",
+      "duration_seconds": 885,
+      "duration": "14:45",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=30",
+      "asr_checked": true,
+      "stem": "p030-实战-部署和使用企业级向量数据库-chroma和milvus-2"
+    },
+    {
+      "page": 31,
+      "title": "5-8 总结和展望：企业级应用的高可用性",
+      "duration_seconds": 160,
+      "duration": "02:40",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=31",
+      "asr_checked": true,
+      "stem": "p031-总结和展望-企业级应用的高可用性"
+    },
+    {
+      "page": 32,
+      "title": "6-1 本章介绍",
+      "duration_seconds": 57,
+      "duration": "00:57",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=32",
+      "asr_checked": true,
+      "stem": "p032-文档解析与分块-本章导学"
+    },
+    {
+      "page": 33,
+      "title": "6-2 复杂：企业数据复杂多样",
+      "duration_seconds": 276,
+      "duration": "04:36",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=33",
+      "asr_checked": true,
+      "stem": "p033-复杂-企业数据复杂多样"
+    },
+    {
+      "page": 34,
+      "title": "6-3 原则：垃圾进垃圾出，注重文档质量",
+      "duration_seconds": 239,
+      "duration": "03:59",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=34",
+      "asr_checked": true,
+      "stem": "p034-原则-垃圾进垃圾出-注重文档质量"
+    },
+    {
+      "page": 35,
+      "title": "6-4 挑战：RAG如何读取多样性文档（文本、表格和布局分析）",
+      "duration_seconds": 551,
+      "duration": "09:11",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=35",
+      "asr_checked": true,
+      "stem": "p035-挑战-RAG如何读取多样性文档-文本-表格和布局分析"
+    },
+    {
+      "page": 36,
+      "title": "6-5 文档分块：递归文本分块和语义智能分块",
+      "duration_seconds": 739,
+      "duration": "12:19",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=36",
+      "asr_checked": true,
+      "stem": "p036-文档分块-递归文本分块和语义智能分块"
+    },
+    {
+      "page": 37,
+      "title": "6-6 实战：实现制度问答模块数据读取和切割",
+      "duration_seconds": 2138,
+      "duration": "35:38",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=37",
+      "asr_checked": true,
+      "stem": "p037-实战-实现制度问答模块数据读取和切割"
+    },
+    {
+      "page": 38,
+      "title": "6-7 本章总结",
+      "duration_seconds": 74,
+      "duration": "01:14",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=38",
+      "asr_checked": true,
+      "stem": "p038-文档解析与分块-本章总结"
+    },
+    {
+      "page": 39,
+      "title": "7-1 本章介绍",
+      "duration_seconds": 84,
+      "duration": "01:24",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=39",
+      "asr_checked": true,
+      "stem": "p039-企业制度问答-Baseline-本章导学"
+    },
+    {
+      "page": 40,
+      "title": "7-2 【企业员工制度问答助手】需求分析",
+      "duration_seconds": 145,
+      "duration": "02:25",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=40",
+      "asr_checked": true,
+      "stem": "p040-企业员工制度问答助手-需求分析"
+    },
+    {
+      "page": 41,
+      "title": "7-3 项目技术选型",
+      "duration_seconds": 96,
+      "duration": "01:36",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=41",
+      "asr_checked": true,
+      "stem": "p041-项目技术选型"
+    },
+    {
+      "page": 42,
+      "title": "7-4 项目架构设计",
+      "duration_seconds": 100,
+      "duration": "01:40",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=42",
+      "asr_checked": true,
+      "stem": "p042-项目架构设计"
+    },
+    {
+      "page": 43,
+      "title": "7-5 实战：实现制度问答模块RAG baseline",
+      "duration_seconds": 982,
+      "duration": "16:22",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=43",
+      "asr_checked": true,
+      "stem": "p043-实战-实现制度问答模块RAG-baseline"
+    },
+    {
+      "page": 44,
+      "title": "7-6 总结和展望：转变思想，AI应用开发和传统软件开发的区别",
+      "duration_seconds": 267,
+      "duration": "04:27",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=44",
+      "asr_checked": true,
+      "stem": "p044-总结和展望-转变思想-AI应用开发和传统软件开发的区别"
+    },
+    {
+      "page": 45,
+      "title": "8-1 本章介绍",
+      "duration_seconds": 50,
+      "duration": "00:50",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=45",
+      "asr_checked": true,
+      "stem": "p045-RAG-评估-本章导学"
+    },
+    {
+      "page": 46,
+      "title": "8-2 RAG迭代的关键：评估",
+      "duration_seconds": 233,
+      "duration": "03:53",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=46",
+      "asr_checked": true,
+      "stem": "p046-RAG迭代的关键-评估"
+    },
+    {
+      "page": 47,
+      "title": "8-3 RAG评估的三大步骤",
+      "duration_seconds": 66,
+      "duration": "01:06",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=47",
+      "asr_checked": true,
+      "stem": "p047-RAG评估的三大步骤"
+    },
+    {
+      "page": 48,
+      "title": "8-4 RAG评价神器：Ragas框架",
+      "duration_seconds": 1234,
+      "duration": "20:34",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=48",
+      "asr_checked": true,
+      "stem": "p048-RAG评价神器-Ragas框架"
+    },
+    {
+      "page": 49,
+      "title": "8-5 实战：用Ragas评估制度问答模块的性能",
+      "duration_seconds": 455,
+      "duration": "07:35",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=49",
+      "asr_checked": true,
+      "stem": "p049-实战-用Ragas评估制度问答模块的性能"
+    },
+    {
+      "page": 50,
+      "title": "8-6 本章总结",
+      "duration_seconds": 135,
+      "duration": "02:15",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=50",
+      "asr_checked": true,
+      "stem": "p050-RAG-评估-本章总结"
+    },
+    {
+      "page": 51,
+      "title": "9-1 本章介绍",
+      "duration_seconds": 84,
+      "duration": "01:24",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=51",
+      "asr_checked": true,
+      "stem": "p051-高级检索增强-本章导学"
+    },
+    {
+      "page": 52,
+      "title": "9-2 一图剖析RAG进化之路：探索优化点",
+      "duration_seconds": 183,
+      "duration": "03:03",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=52",
+      "asr_checked": true,
+      "stem": "p052-一图剖析RAG进化之路-探索优化点"
+    },
+    {
+      "page": 53,
+      "title": "9-3 检索的两大形态：稀疏 vs 稠密",
+      "duration_seconds": 585,
+      "duration": "09:45",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=53",
+      "asr_checked": true,
+      "stem": "p053-检索的两大形态-稀疏-vs-稠密"
+    },
+    {
+      "page": 54,
+      "title": "9-4 查询增强：增加相关内容-Query2doc+ HyDE+子问题查询",
+      "duration_seconds": 1237,
+      "duration": "20:37",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=54",
+      "asr_checked": true,
+      "stem": "p054-查询增强-增加相关内容-Query2doc-HyDE-子问题查询"
+    },
+    {
+      "page": 55,
+      "title": "9-5 多索引增强：从不同维度构建索引，强化相关内容",
+      "duration_seconds": 558,
+      "duration": "09:18",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=55",
+      "asr_checked": true,
+      "stem": "p055-多索引增强-从不同维度构建索引-强化相关内容"
+    },
+    {
+      "page": 56,
+      "title": "9-6 检索后增强：融合检索，三个臭皮匠顶一个诸葛亮",
+      "duration_seconds": 535,
+      "duration": "08:55",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=56",
+      "asr_checked": true,
+      "stem": "p056-检索后增强-融合检索-三个臭皮匠顶一个诸葛亮"
+    },
+    {
+      "page": 57,
+      "title": "9-7 检索后增强：重排序技术(Re-rank)",
+      "duration_seconds": 337,
+      "duration": "05:37",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=57",
+      "asr_checked": true,
+      "stem": "p057-检索后增强-重排序技术-Re-rank"
+    },
+    {
+      "page": 58,
+      "title": "9-8 系统性增强：迭代检索增强生成，从上一迭代收获信息",
+      "duration_seconds": 416,
+      "duration": "06:56",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=58",
+      "asr_checked": true,
+      "stem": "p058-系统性增强-迭代检索增强生成-从上一迭代收获信息"
+    },
+    {
+      "page": 59,
+      "title": "9-9 RAG新范式：自我评估增强Self-RAG",
+      "duration_seconds": 650,
+      "duration": "10:50",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=59",
+      "asr_checked": true,
+      "stem": "p059-RAG新范式-自我评估增强Self-RAG"
+    },
+    {
+      "page": 60,
+      "title": "9-10 总结和展望：关于企业里需要良好的代码规范和代码管理",
+      "duration_seconds": 1182,
+      "duration": "19:42",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=60",
+      "asr_checked": true,
+      "stem": "p060-总结和展望-关于企业里需要良好的代码规范和代码管理"
+    },
+    {
+      "page": 61,
+      "title": "9-11 实战：用检索增强技术提升制度问答模块性能-查询增强-1",
+      "duration_seconds": 1286,
+      "duration": "21:26",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=61",
+      "asr_checked": true,
+      "stem": "p061-实战-用检索增强技术提升制度问答模块性能-查询增强-1"
+    },
+    {
+      "page": 62,
+      "title": "9-12 实战：用检索增强技术提升制度问答模块性能-查询增强-2",
+      "duration_seconds": 1617,
+      "duration": "26:57",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=62",
+      "asr_checked": true,
+      "stem": "p062-实战-用检索增强技术提升制度问答模块性能-查询增强-2"
+    },
+    {
+      "page": 63,
+      "title": "9-13 实战：用检索增强技术提升制度问答模块性能-多索引增强",
+      "duration_seconds": 1435,
+      "duration": "23:55",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=63",
+      "asr_checked": true,
+      "stem": "p063-实战-用检索增强技术提升制度问答模块性能-多索引增强"
+    },
+    {
+      "page": 64,
+      "title": "9-14 实战：用检索增强技术提升制度问答模块性能-融合检索",
+      "duration_seconds": 431,
+      "duration": "07:11",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=64",
+      "asr_checked": true,
+      "stem": "p064-实战-用检索增强技术提升制度问答模块性能-融合检索"
+    },
+    {
+      "page": 65,
+      "title": "9-16 实战：用检索增强技术提升制度问答模块性能-rerank重排",
+      "duration_seconds": 391,
+      "duration": "06:31",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=65",
+      "asr_checked": true,
+      "stem": "p065-实战-用检索增强技术提升制度问答模块性能-rerank重排"
+    },
+    {
+      "page": 66,
+      "title": "9-17 实战：用检索增强技术提升制度问答模块性能-迭代检索增强生成",
+      "duration_seconds": 363,
+      "duration": "06:03",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=66",
+      "asr_checked": true,
+      "stem": "p066-实战-用检索增强技术提升制度问答模块性能-迭代检索增强生成"
+    },
+    {
+      "page": 67,
+      "title": "9-18 实战：用检索增强技术提升制度问答模块性能-self-RAG-1",
+      "duration_seconds": 1055,
+      "duration": "17:35",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=67",
+      "asr_checked": true,
+      "stem": "p067-实战-用检索增强技术提升制度问答模块性能-self-RAG-1"
+    },
+    {
+      "page": 68,
+      "title": "9-19 实战：用检索增强技术提升制度问答模块性能-self-RAG-2",
+      "duration_seconds": 1070,
+      "duration": "17:50",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=68",
+      "asr_checked": true,
+      "stem": "p068-实战-用检索增强技术提升制度问答模块性能-self-RAG-2"
+    },
+    {
+      "page": 69,
+      "title": "10-1 本章介绍",
+      "duration_seconds": 169,
+      "duration": "02:49",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=69",
+      "asr_checked": true,
+      "stem": "p069-Graph-RAG-本章导学"
+    },
+    {
+      "page": 70,
+      "title": "10-2 认识金融智库知识图谱数据：特别的知识三元组",
+      "duration_seconds": 722,
+      "duration": "12:02",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=70",
+      "asr_checked": true,
+      "stem": "p070-认识金融智库知识图谱数据-特别的知识三元组"
+    },
+    {
+      "page": 71,
+      "title": "10-3 如何存储和操作知识图谱：neo4j和nebulagraph",
+      "duration_seconds": 997,
+      "duration": "16:37",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=71",
+      "asr_checked": true,
+      "stem": "p071-如何存储和操作知识图谱-neo4j和nebulagraph"
+    },
+    {
+      "page": 72,
+      "title": "10-4 实战：动手构建金融智库知识图谱-1",
+      "duration_seconds": 1047,
+      "duration": "17:27",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=72",
+      "asr_checked": true,
+      "stem": "p072-实战-动手构建金融智库知识图谱-1"
+    },
+    {
+      "page": 73,
+      "title": "10-5 实战：动手构建金融智库知识图谱-2",
+      "duration_seconds": 1223,
+      "duration": "20:23",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=73",
+      "asr_checked": true,
+      "stem": "p073-实战-动手构建金融智库知识图谱-2"
+    },
+    {
+      "page": 74,
+      "title": "10-6 RAG和Graph RAG有什么区别：如何构建Graph RAG",
+      "duration_seconds": 1084,
+      "duration": "18:04",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=74",
+      "asr_checked": true,
+      "stem": "p074-RAG和Graph-RAG有什么区别-如何构建Graph-RAG"
+    },
+    {
+      "page": 75,
+      "title": "10-7 实战：利用Graph RAG构建金融智库知识库应用",
+      "duration_seconds": 1574,
+      "duration": "26:14",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=75",
+      "asr_checked": true,
+      "stem": "p075-实战-利用Graph-RAG构建金融智库知识库应用"
+    },
+    {
+      "page": 76,
+      "title": "10-8 总结和展望：如何自我学习，跟进前沿技术",
+      "duration_seconds": 590,
+      "duration": "09:50",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=76",
+      "asr_checked": true,
+      "stem": "p076-总结和展望-如何自我学习-跟进前沿技术"
+    },
+    {
+      "page": 77,
+      "title": "11-1 本章介绍",
+      "duration_seconds": 85,
+      "duration": "01:25",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=77",
+      "asr_checked": true,
+      "stem": "p077-Agentic-RAG-本章导学"
+    },
+    {
+      "page": 78,
+      "title": "11-2 大模型的手脚：AI智能体Agent",
+      "duration_seconds": 867,
+      "duration": "14:27",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=78",
+      "asr_checked": true,
+      "stem": "p078-大模型的手脚-AI智能体Agent"
+    },
+    {
+      "page": 79,
+      "title": "11-3 推理和行动并行：ReAct框架",
+      "duration_seconds": 286,
+      "duration": "04:46",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=79",
+      "asr_checked": true,
+      "stem": "p079-推理和行动并行-ReAct框架"
+    },
+    {
+      "page": 80,
+      "title": "11-4 基于Agent的多文档RAG Router",
+      "duration_seconds": 157,
+      "duration": "02:37",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=80",
+      "asr_checked": true,
+      "stem": "p080-基于Agent的多文档RAG-Router"
+    },
+    {
+      "page": 81,
+      "title": "11-5 实战：利用 ReAct Agent 实现 RAG Router",
+      "duration_seconds": 811,
+      "duration": "13:31",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=81",
+      "asr_checked": true,
+      "stem": "p081-实战-利用-ReAct-Agent-实现-RAG-Router"
+    },
+    {
+      "page": 82,
+      "title": "11-6 本章总结",
+      "duration_seconds": 85,
+      "duration": "01:25",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=82",
+      "asr_checked": true,
+      "stem": "p082-Agentic-RAG-本章总结"
+    },
+    {
+      "page": 83,
+      "title": "12-1 本章介绍",
+      "duration_seconds": 74,
+      "duration": "01:14",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=83",
+      "asr_checked": true,
+      "stem": "p083-Gradio-整合-本章导学"
+    },
+    {
+      "page": 84,
+      "title": "12-2 演示界面神器：gradio介绍",
+      "duration_seconds": 740,
+      "duration": "12:20",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=84",
+      "asr_checked": true,
+      "stem": "p084-演示界面神器-gradio介绍"
+    },
+    {
+      "page": 85,
+      "title": "12-3 实战：gradio整合两大RAG项目（1）",
+      "duration_seconds": 804,
+      "duration": "13:24",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=85",
+      "asr_checked": true,
+      "stem": "p085-实战-gradio整合两大RAG项目-1"
+    },
+    {
+      "page": 86,
+      "title": "12-4 实战：gradio整合两大RAG项目（2）",
+      "duration_seconds": 1147,
+      "duration": "19:07",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=86",
+      "asr_checked": true,
+      "stem": "p086-实战-gradio整合两大RAG项目-2"
+    },
+    {
+      "page": 87,
+      "title": "13-1 本章介绍",
+      "duration_seconds": 92,
+      "duration": "01:32",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=87",
+      "asr_checked": true,
+      "stem": "p087-模型微调导言-本章导学"
+    },
+    {
+      "page": 88,
+      "title": "14-1 项目总结和展望：课程回顾与总结",
+      "duration_seconds": 906,
+      "duration": "15:06",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=88",
+      "asr_checked": true,
+      "stem": "p088-项目总结和展望-课程回顾与总结"
+    },
+    {
+      "page": 89,
+      "title": "14-2 项目总结和展望：课程总结与 AI 岗位面试技巧",
+      "duration_seconds": 957,
+      "duration": "15:57",
+      "url": "https://www.bilibili.com/video/BV1fLoKBREGv?p=89",
+      "asr_checked": true,
+      "stem": "p089-项目总结和展望-课程总结与-AI-岗位面试技巧"
+    }
+  ]
+}
