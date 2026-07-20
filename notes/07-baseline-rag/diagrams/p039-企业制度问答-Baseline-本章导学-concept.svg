@@ -1,33 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" role="img" width="1200" height="680" viewBox="0 0 1200 680">
-  <title>P39 7-1 本章介绍 原创概念图</title>
-  <desc>Baseline 章怎样把前置组件接成系统？。图中按顺序包含本节五个核心知识节点及解释。</desc>
+  <title>P39 第 7 章企业制度问答 Baseline 学习路线</title>
+  <desc>从前置组件出发，依次经过需求分析、技术选型、架构设计、实现测试和 Baseline 复盘，进入评估迭代。</desc>
   <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#f8fafc"/>
-      <stop offset="1" stop-color="#e0f2fe"/>
-    </linearGradient>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 z" fill="#94a3b8"/>
-    </marker>
-    <style>
-      .chapter { font: 700 22px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0369a1; }
-      .title { font: 700 32px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
-      .number { font: 700 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
-      .node { font: 700 21px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
-      .detail { font: 500 15px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
-      .hint { font: 500 20px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
-      .question { font: 700 24px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
-      .brand { font: 500 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#cbd5e1; }
-    </style>
+    <linearGradient id="bg39" x1="0" x2="1"><stop stop-color="#eff6ff"/><stop offset="1" stop-color="#ecfeff"/></linearGradient>
+    <marker id="a39" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#64748b"/></marker>
+    <style>.h{font:700 22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0369a1}.t{font:700 31px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.n{font:700 19px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.d{font:500 15px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#475569}.p{stroke:#64748b;stroke-width:4;fill:none;marker-end:url(#a39)}</style>
   </defs>
-  <rect width="1200" height="680" rx="30" fill="url(#bg)"/>
-  <text x="42" y="62" class="chapter">第 39 节 · P039 · 企业制度问答 Baseline</text>
-  <text x="600" y="115" text-anchor="middle" class="title">7-1 本章介绍</text>
-  <text x="42" y="207" class="hint">本节完整知识链：概念、作用与前后关系都写在图内</text>
-  <path d="M 236 340 L 266 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 468 340 L 498 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 700 340 L 730 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 932 340 L 962 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/>
-  <rect x="42" y="245" width="190" height="190" rx="24" fill="white" stroke="#2563eb" stroke-width="4"/><circle cx="70" cy="270" r="16" fill="#2563eb"/><text x="70" y="277" text-anchor="middle" class="number">1</text><text x="137" y="307" text-anchor="middle" class="node">业务需求</text><text x="137" y="354" text-anchor="middle" class="detail">企业员工制度问答</text><rect x="274" y="245" width="190" height="190" rx="24" fill="white" stroke="#0891b2" stroke-width="4"/><circle cx="302" cy="270" r="16" fill="#0891b2"/><text x="302" y="277" text-anchor="middle" class="number">2</text><text x="369" y="307" text-anchor="middle" class="node">技术选型</text><text x="369" y="354" text-anchor="middle" class="detail">LLM、Embedding、向</text><text x="369" y="376" text-anchor="middle" class="detail">量库、框架</text><rect x="506" y="245" width="190" height="190" rx="24" fill="white" stroke="#059669" stroke-width="4"/><circle cx="534" cy="270" r="16" fill="#059669"/><text x="534" y="277" text-anchor="middle" class="number">3</text><text x="601" y="307" text-anchor="middle" class="node">架构设计</text><text x="601" y="354" text-anchor="middle" class="detail">离线建库与在线问答</text><text x="601" y="376" text-anchor="middle" class="detail">解耦</text><rect x="738" y="245" width="190" height="190" rx="24" fill="white" stroke="#7c3aed" stroke-width="4"/><circle cx="766" cy="270" r="16" fill="#7c3aed"/><text x="766" y="277" text-anchor="middle" class="number">4</text><text x="833" y="307" text-anchor="middle" class="node">Baseline 实现</text><text x="833" y="354" text-anchor="middle" class="detail">召回证据后约束模型</text><text x="833" y="376" text-anchor="middle" class="detail">生成</text><rect x="970" y="245" width="190" height="190" rx="24" fill="white" stroke="#ea580c" stroke-width="4"/><circle cx="998" cy="270" r="16" fill="#ea580c"/><text x="998" y="277" text-anchor="middle" class="number">5</text><text x="1065" y="307" text-anchor="middle" class="node">迭代入口</text><text x="1065" y="354" text-anchor="middle" class="detail">先能评测，再谈高级</text><text x="1065" y="376" text-anchor="middle" class="detail">增强</text>
-  <rect x="42" y="492" width="1116" height="132" rx="24" fill="#0f172a"/>
-  <text x="70" y="532" class="brand">学完必须能回答</text>
-  <text x="600" y="575" text-anchor="middle" class="question">Baseline 章怎样把前置组件接成系统？</text>
-  <text x="1125" y="607" text-anchor="end" class="brand">原创示意图 · rag_study</text>
+  <rect width="1200" height="680" rx="30" fill="url(#bg39)"/>
+  <text x="44" y="58" class="h">第 7 章 · P039 · 企业制度问答 Baseline</text>
+  <text x="600" y="110" text-anchor="middle" class="t">本章不是再学零件，而是按软件工程顺序把零件接成系统</text>
+  <rect x="44" y="170" width="1112" height="96" rx="20" fill="#0f172a"/>
+  <text x="600" y="208" text-anchor="middle" style="font:700 19px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">前六章已经具备</text>
+  <text x="600" y="240" text-anchor="middle" style="font:500 17px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#cbd5e1">LLM · Embedding · 向量数据库 · LangChain · 复杂文档解析与分块</text>
+  <path d="M600 266V305" class="p"/>
+  <g>
+    <rect x="44" y="322" width="190" height="128" rx="20" fill="white" stroke="#2563eb" stroke-width="3"/><text x="139" y="365" text-anchor="middle" class="n">P40 需求分析</text><text x="139" y="397" text-anchor="middle" class="d">痛点、功能、依赖数据</text><text x="139" y="423" text-anchor="middle" class="d">先定义问题</text>
+    <rect x="274" y="322" width="190" height="128" rx="20" fill="white" stroke="#0891b2" stroke-width="3"/><text x="369" y="365" text-anchor="middle" class="n">P41 技术选型</text><text x="369" y="397" text-anchor="middle" class="d">BGE-M3 / Chroma</text><text x="369" y="423" text-anchor="middle" class="d">Qwen2 / DeepDoc</text>
+    <rect x="504" y="322" width="190" height="128" rx="20" fill="white" stroke="#059669" stroke-width="3"/><text x="599" y="365" text-anchor="middle" class="n">P42 架构设计</text><text x="599" y="397" text-anchor="middle" class="d">离线建库</text><text x="599" y="423" text-anchor="middle" class="d">在线问答</text>
+    <rect x="734" y="322" width="190" height="128" rx="20" fill="white" stroke="#7c3aed" stroke-width="3"/><text x="829" y="365" text-anchor="middle" class="n">P43 开发测试</text><text x="829" y="397" text-anchor="middle" class="d">入库、检索、提示词</text><text x="829" y="423" text-anchor="middle" class="d">加班与差旅测试</text>
+    <rect x="964" y="322" width="192" height="128" rx="20" fill="white" stroke="#ea580c" stroke-width="3"/><text x="1060" y="365" text-anchor="middle" class="n">P44 Baseline</text><text x="1060" y="397" text-anchor="middle" class="d">能运行 ≠ 能上线</text><text x="1060" y="423" text-anchor="middle" class="d">进入评估迭代</text>
+  </g>
+  <path d="M234 386H268M464 386H498M694 386H728M924 386H958" class="p"/>
+  <rect x="260" y="515" width="680" height="102" rx="24" fill="#0369a1"/>
+  <text x="600" y="555" text-anchor="middle" style="font:700 22px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">学完必须能回答 · 本章最终产物是什么？</text>
+  <text x="600" y="588" text-anchor="middle" style="font:500 18px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#e0f2fe">内部知识库 + 查询—检索—增强—生成 Pipeline + 可继续评测的第一版</text>
 </svg>

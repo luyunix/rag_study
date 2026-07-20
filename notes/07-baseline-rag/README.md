@@ -45,6 +45,21 @@ chunks。
 - Prompt Builder 负责证据编号和拒答规则；
 - Generator 只看到明确、受预算控制的上下文。
 
+本章视频演示采用的具体组合是：
+
+- 两份制度 PDF 用 RAGFlow DeepDoc 解析，住宿标准 Excel 用 `openpyxl` 读取；
+- Excel 合并单元格先展开并回填，避免地区、职级与金额失去对应关系；
+- DeepDoc 返回的长文本超过 200 字时，再按 `chunk_size=128`、
+  `chunk_overlap=30` 切分；
+- Embedding 使用 BGE-M3。视频口径为 1024 维、支持约 8K Token、约
+  5.6 亿参数，课程环境内存占用约 2GB；
+- 向量库使用 Chroma，集合名为“制度DB”，在线调用
+  `similarity_search` 获取 Top-k；
+- 生成模型使用 Qwen2-72B 的 OpenAI-compatible 接口，并以流式方式输出。
+
+这些值是课程 Baseline 的复现参数，不是所有项目的推荐默认值。换数据规模、部署
+环境或质量要求后，要在同一评测集上重新比较。
+
 ## 最小提示词契约
 
 ```text

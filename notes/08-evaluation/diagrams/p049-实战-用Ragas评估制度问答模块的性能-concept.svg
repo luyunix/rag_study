@@ -1,33 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" role="img" width="1200" height="680" viewBox="0 0 1200 680">
-  <title>P49 8-5 实战：用Ragas评估制度问答模块的性能 原创概念图</title>
-  <desc>怎样用 Ragas 评估制度问答模块？。图中按顺序包含本节五个核心知识节点及解释。</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#f8fafc"/>
-      <stop offset="1" stop-color="#e0f2fe"/>
-    </linearGradient>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 z" fill="#94a3b8"/>
-    </marker>
-    <style>
-      .chapter { font: 700 22px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0369a1; }
-      .title { font: 700 32px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
-      .number { font: 700 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
-      .node { font: 700 21px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
-      .detail { font: 500 15px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
-      .hint { font: 500 20px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
-      .question { font: 700 24px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
-      .brand { font: 500 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#cbd5e1; }
-    </style>
-  </defs>
-  <rect width="1200" height="680" rx="30" fill="url(#bg)"/>
-  <text x="42" y="62" class="chapter">第 49 节 · P049 · RAG 评估</text>
-  <text x="600" y="115" text-anchor="middle" class="title">8-5 实战：用Ragas评估制度问答模块的性能</text>
-  <text x="42" y="207" class="hint">本节完整知识链：概念、作用与前后关系都写在图内</text>
-  <path d="M 236 340 L 266 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 468 340 L 498 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 700 340 L 730 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 932 340 L 962 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/>
-  <rect x="42" y="245" width="190" height="190" rx="24" fill="white" stroke="#2563eb" stroke-width="4"/><circle cx="70" cy="270" r="16" fill="#2563eb"/><text x="70" y="277" text-anchor="middle" class="number">1</text><text x="137" y="307" text-anchor="middle" class="node">整理样本</text><text x="137" y="354" text-anchor="middle" class="detail">问题、模型答案、检</text><text x="137" y="376" text-anchor="middle" class="detail">索上下文、参考答案</text><rect x="274" y="245" width="190" height="190" rx="24" fill="white" stroke="#0891b2" stroke-width="4"/><circle cx="302" cy="270" r="16" fill="#0891b2"/><text x="302" y="277" text-anchor="middle" class="number">2</text><text x="369" y="307" text-anchor="middle" class="node">构造数据集</text><text x="369" y="354" text-anchor="middle" class="detail">字段名与类型满足框</text><text x="369" y="376" text-anchor="middle" class="detail">架要求</text><rect x="506" y="245" width="190" height="190" rx="24" fill="white" stroke="#059669" stroke-width="4"/><circle cx="534" cy="270" r="16" fill="#059669"/><text x="534" y="277" text-anchor="middle" class="number">3</text><text x="601" y="307" text-anchor="middle" class="node">配置评审模型</text><text x="601" y="354" text-anchor="middle" class="detail">LLM/Embedding 与密</text><text x="601" y="376" text-anchor="middle" class="detail">钥环境</text><rect x="738" y="245" width="190" height="190" rx="24" fill="white" stroke="#7c3aed" stroke-width="4"/><circle cx="766" cy="270" r="16" fill="#7c3aed"/><text x="766" y="277" text-anchor="middle" class="number">4</text><text x="833" y="307" text-anchor="middle" class="node">执行指标</text><text x="833" y="354" text-anchor="middle" class="detail">逐样本保存分数和错</text><text x="833" y="376" text-anchor="middle" class="detail">误</text><rect x="970" y="245" width="190" height="190" rx="24" fill="white" stroke="#ea580c" stroke-width="4"/><circle cx="998" cy="270" r="16" fill="#ea580c"/><text x="998" y="277" text-anchor="middle" class="number">5</text><text x="1065" y="307" text-anchor="middle" class="node">坏例复盘</text><text x="1065" y="354" text-anchor="middle" class="detail">把低分定位到召回或</text><text x="1065" y="376" text-anchor="middle" class="detail">生成环节</text>
-  <rect x="42" y="492" width="1116" height="132" rx="24" fill="#0f172a"/>
-  <text x="70" y="532" class="brand">学完必须能回答</text>
-  <text x="600" y="575" text-anchor="middle" class="question">怎样用 Ragas 评估制度问答模块？</text>
-  <text x="1125" y="607" text-anchor="end" class="brand">原创示意图 · rag_study</text>
+  <title>P49 用 Ragas 评估制度问答 Pipeline</title>
+  <desc>人工问题和标准答案进入制度问答 Pipeline，收集答案与有序上下文，组成 Dataset 后由评审 LLM 和 Embedding 计算四项指标。</desc>
+  <defs><linearGradient id="b49" x1="0" x2="1"><stop stop-color="#fff7ed"/><stop offset="1" stop-color="#ecfeff"/></linearGradient><marker id="a49" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#64748b"/></marker><style>.h{font:700 22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#c2410c}.t{font:700 31px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.n{font:700 18px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.d{font:500 14px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#475569}.p{stroke:#64748b;stroke-width:4;fill:none;marker-end:url(#a49)}</style></defs>
+  <rect width="1200" height="680" rx="30" fill="url(#b49)"/>
+  <text x="44" y="58" class="h">第 8 章 · P049 · Ragas 评估实战</text>
+  <text x="600" y="105" text-anchor="middle" class="t">把问答函数改成“答案 + 上下文”，才能评估完整 RAG</text>
+  <text x="44" y="158" class="n">A. 收集四字段 Dataset</text>
+  <rect x="44" y="185" width="190" height="120" rx="20" fill="white" stroke="#2563eb" stroke-width="3"/><text x="139" y="224" text-anchor="middle" class="n">人工评测数据</text><text x="139" y="255" text-anchor="middle" class="d">questions</text><text x="139" y="280" text-anchor="middle" class="d">ground_truths</text>
+  <rect x="280" y="185" width="235" height="120" rx="20" fill="white" stroke="#059669" stroke-width="3"/><text x="397" y="224" text-anchor="middle" class="n">制度问答 Pipeline</text><text x="397" y="255" text-anchor="middle" class="d">Chroma“制度DB” · k=3</text><text x="397" y="280" text-anchor="middle" class="d">Qwen2-72B 生成</text>
+  <rect x="561" y="185" width="220" height="120" rx="20" fill="white" stroke="#7c3aed" stroke-width="3"/><text x="671" y="224" text-anchor="middle" class="n">逐题收集</text><text x="671" y="255" text-anchor="middle" class="d">answers</text><text x="671" y="280" text-anchor="middle" class="d">contexts（保留排名）</text>
+  <rect x="827" y="175" width="329" height="140" rx="22" fill="#0f172a"/><text x="991" y="217" text-anchor="middle" style="font:700 18px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">Dataset.from_dict</text><text x="991" y="250" text-anchor="middle" style="font:500 14px ui-monospace,SFMono-Regular,monospace;fill:#cbd5e1">question · answer</text><text x="991" y="276" text-anchor="middle" style="font:500 14px ui-monospace,SFMono-Regular,monospace;fill:#cbd5e1">contexts · ground_truth</text>
+  <path d="M234 245H274M515 245H555M781 245H821" class="p"/>
+  <text x="44" y="372" class="n">B. 自动评审并解释低分</text>
+  <rect x="44" y="400" width="230" height="120" rx="20" fill="white" stroke="#2563eb" stroke-width="3"/><text x="159" y="439" text-anchor="middle" class="n">评审器配置</text><text x="159" y="470" text-anchor="middle" class="d">Qwen2-72B + BGE-M3</text><text x="159" y="495" text-anchor="middle" class="d">增加超时时间</text>
+  <rect x="320" y="390" width="260" height="140" rx="22" fill="#7c3aed"/><text x="450" y="433" text-anchor="middle" style="font:700 20px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">Ragas evaluate</text><text x="450" y="470" text-anchor="middle" style="font:500 14px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#ede9fe">Faithfulness · Relevancy</text><text x="450" y="497" text-anchor="middle" style="font:500 14px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#ede9fe">Context Recall · Precision</text>
+  <rect x="626" y="400" width="230" height="120" rx="20" fill="white" stroke="#0891b2" stroke-width="3"/><text x="741" y="439" text-anchor="middle" class="n">逐样本结果</text><text x="741" y="470" text-anchor="middle" class="d">转成表格</text><text x="741" y="495" text-anchor="middle" class="d">不要只看平均分</text>
+  <rect x="902" y="390" width="254" height="140" rx="22" fill="white" stroke="#ea580c" stroke-width="3"/><text x="1029" y="433" text-anchor="middle" class="n">针对性改进</text><text x="1029" y="466" text-anchor="middle" class="d">检索低 → 改召回/排序</text><text x="1029" y="493" text-anchor="middle" class="d">生成低 → 改提示词/模型</text>
+  <path d="M274 460H314M580 460H620M856 460H896" class="p"/>
+  <path d="M991 315V350C991 370 450 370 450 384" class="p"/>
+  <rect x="170" y="585" width="860" height="58" rx="20" fill="#0e7490"/><text x="600" y="620" text-anchor="middle" style="font:600 16px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">学完必须能回答：两道题跑通为何只是代码验收，而不是性能验收？</text>
 </svg>

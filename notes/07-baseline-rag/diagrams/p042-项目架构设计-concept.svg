@@ -1,33 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" role="img" width="1200" height="680" viewBox="0 0 1200 680">
-  <title>P42 7-4 项目架构设计 原创概念图</title>
-  <desc>一个可迭代的 RAG 架构应怎样分层？。图中按顺序包含本节五个核心知识节点及解释。</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#f8fafc"/>
-      <stop offset="1" stop-color="#e0f2fe"/>
-    </linearGradient>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 z" fill="#94a3b8"/>
-    </marker>
-    <style>
-      .chapter { font: 700 22px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0369a1; }
-      .title { font: 700 32px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
-      .number { font: 700 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
-      .node { font: 700 21px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
-      .detail { font: 500 15px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
-      .hint { font: 500 20px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
-      .question { font: 700 24px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
-      .brand { font: 500 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#cbd5e1; }
-    </style>
-  </defs>
-  <rect width="1200" height="680" rx="30" fill="url(#bg)"/>
-  <text x="42" y="62" class="chapter">第 42 节 · P042 · 企业制度问答 Baseline</text>
-  <text x="600" y="115" text-anchor="middle" class="title">7-4 项目架构设计</text>
-  <text x="42" y="207" class="hint">本节完整知识链：概念、作用与前后关系都写在图内</text>
-  <path d="M 236 340 L 266 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 468 340 L 498 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 700 340 L 730 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 932 340 L 962 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/>
-  <rect x="42" y="245" width="190" height="190" rx="24" fill="white" stroke="#2563eb" stroke-width="4"/><circle cx="70" cy="270" r="16" fill="#2563eb"/><text x="70" y="277" text-anchor="middle" class="number">1</text><text x="137" y="307" text-anchor="middle" class="node">数据接入层</text><text x="137" y="354" text-anchor="middle" class="detail">解析、清洗、分块、</text><text x="137" y="376" text-anchor="middle" class="detail">元数据</text><rect x="274" y="245" width="190" height="190" rx="24" fill="white" stroke="#0891b2" stroke-width="4"/><circle cx="302" cy="270" r="16" fill="#0891b2"/><text x="302" y="277" text-anchor="middle" class="number">2</text><text x="369" y="307" text-anchor="middle" class="node">索引层</text><text x="369" y="354" text-anchor="middle" class="detail">Embedding、向量库</text><text x="369" y="376" text-anchor="middle" class="detail">与版本</text><rect x="506" y="245" width="190" height="190" rx="24" fill="white" stroke="#059669" stroke-width="4"/><circle cx="534" cy="270" r="16" fill="#059669"/><text x="534" y="277" text-anchor="middle" class="number">3</text><text x="601" y="307" text-anchor="middle" class="node">检索层</text><text x="601" y="354" text-anchor="middle" class="detail">查询处理、召回、融</text><text x="601" y="376" text-anchor="middle" class="detail">合、重排</text><rect x="738" y="245" width="190" height="190" rx="24" fill="white" stroke="#7c3aed" stroke-width="4"/><circle cx="766" cy="270" r="16" fill="#7c3aed"/><text x="766" y="277" text-anchor="middle" class="number">4</text><text x="833" y="307" text-anchor="middle" class="node">生成层</text><text x="833" y="354" text-anchor="middle" class="detail">提示词、上下文、LL</text><text x="833" y="376" text-anchor="middle" class="detail">M 与引用</text><rect x="970" y="245" width="190" height="190" rx="24" fill="white" stroke="#ea580c" stroke-width="4"/><circle cx="998" cy="270" r="16" fill="#ea580c"/><text x="998" y="277" text-anchor="middle" class="number">5</text><text x="1065" y="307" text-anchor="middle" class="node">评估观测层</text><text x="1065" y="354" text-anchor="middle" class="detail">数据集、指标、日志</text><text x="1065" y="376" text-anchor="middle" class="detail">与反馈</text>
-  <rect x="42" y="492" width="1116" height="132" rx="24" fill="#0f172a"/>
-  <text x="70" y="532" class="brand">学完必须能回答</text>
-  <text x="600" y="575" text-anchor="middle" class="question">一个可迭代的 RAG 架构应怎样分层？</text>
-  <text x="1125" y="607" text-anchor="end" class="brand">原创示意图 · rag_study</text>
+  <title>P42 企业制度问答项目架构</title>
+  <desc>离线知识库构建和在线问答两条流水线通过向量数据库连接，答案与参考上下文共同返回前端。</desc>
+  <defs><linearGradient id="bg42" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#ede9fe"/></linearGradient><marker id="a42" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#64748b"/></marker><style>.h{font:700 22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#6d28d9}.t{font:700 31px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.lane{font:700 20px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:white}.n{font:700 17px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.d{font:500 14px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#475569}.p{stroke:#64748b;stroke-width:4;fill:none;marker-end:url(#a42)}</style></defs>
+  <rect width="1200" height="680" rx="30" fill="url(#bg42)"/>
+  <text x="44" y="58" class="h">第 7 章 · P042 · 项目架构设计</text>
+  <text x="600" y="108" text-anchor="middle" class="t">两条流水线：离线把资料变成索引，在线把问题变成有依据的答案</text>
+  <rect x="44" y="150" width="1112" height="200" rx="24" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+  <rect x="44" y="150" width="175" height="200" rx="24" fill="#2563eb"/><text x="131" y="225" text-anchor="middle" class="lane">离线</text><text x="131" y="256" text-anchor="middle" class="lane">内部知识库</text><text x="131" y="300" text-anchor="middle" style="font:500 14px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#dbeafe">资料更新时运行</text>
+  <g><rect x="260" y="205" width="155" height="92" rx="18" fill="white" stroke="#2563eb" stroke-width="2"/><text x="337" y="243" text-anchor="middle" class="n">PDF / Excel</text><text x="337" y="270" text-anchor="middle" class="d">原始企业资料</text>
+  <rect x="457" y="205" width="155" height="92" rx="18" fill="white" stroke="#2563eb" stroke-width="2"/><text x="534" y="243" text-anchor="middle" class="n">解析与分块</text><text x="534" y="270" text-anchor="middle" class="d">文本 / 表格 / 条件</text>
+  <rect x="654" y="205" width="155" height="92" rx="18" fill="white" stroke="#2563eb" stroke-width="2"/><text x="731" y="243" text-anchor="middle" class="n">Embedding</text><text x="731" y="270" text-anchor="middle" class="d">文档块 → 向量</text>
+  <rect x="851" y="190" width="250" height="122" rx="22" fill="#0f172a"/><text x="976" y="235" text-anchor="middle" style="font:700 19px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">向量数据库</text><text x="976" y="268" text-anchor="middle" style="font:500 15px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#cbd5e1">向量 + 正文 + 来源</text><text x="976" y="291" text-anchor="middle" style="font:500 14px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#cbd5e1">离线与在线连接点</text></g>
+  <path d="M415 251H451M612 251H648M809 251H845" class="p"/>
+  <rect x="44" y="400" width="1112" height="200" rx="24" fill="#f5f3ff" stroke="#7c3aed" stroke-width="3"/>
+  <rect x="44" y="400" width="175" height="200" rx="24" fill="#7c3aed"/><text x="131" y="475" text-anchor="middle" class="lane">在线</text><text x="131" y="506" text-anchor="middle" class="lane">员工问答</text><text x="131" y="550" text-anchor="middle" style="font:500 14px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#ede9fe">每个问题运行</text>
+  <g><rect x="260" y="455" width="150" height="92" rx="18" fill="white" stroke="#7c3aed" stroke-width="2"/><text x="335" y="493" text-anchor="middle" class="n">员工问题</text><text x="335" y="520" text-anchor="middle" class="d">问题向量化</text>
+  <rect x="445" y="455" width="150" height="92" rx="18" fill="white" stroke="#7c3aed" stroke-width="2"/><text x="520" y="493" text-anchor="middle" class="n">相似度检索</text><text x="520" y="520" text-anchor="middle" class="d">从向量库取 Top-k</text>
+  <rect x="630" y="455" width="150" height="92" rx="18" fill="white" stroke="#7c3aed" stroke-width="2"/><text x="705" y="493" text-anchor="middle" class="n">提示词</text><text x="705" y="520" text-anchor="middle" class="d">问题 + 相关上下文</text>
+  <rect x="815" y="455" width="125" height="92" rx="18" fill="white" stroke="#7c3aed" stroke-width="2"/><text x="877" y="493" text-anchor="middle" class="n">LLM</text><text x="877" y="520" text-anchor="middle" class="d">生成答案</text>
+  <rect x="975" y="440" width="126" height="122" rx="20" fill="#0f172a"/><text x="1038" y="481" text-anchor="middle" style="font:700 17px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">前端展示</text><text x="1038" y="514" text-anchor="middle" style="font:500 14px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#cbd5e1">答案</text><text x="1038" y="539" text-anchor="middle" style="font:500 14px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#cbd5e1">参考上下文</text></g>
+  <path d="M410 501H439M595 501H624M780 501H809M940 501H969" class="p"/>
+  <path d="M976 312V366C976 390 520 390 520 449" class="p"/>
+  <text x="600" y="646" text-anchor="middle" class="d">学完必须能回答：离线建库和在线问答怎样通过向量库连接？</text>
 </svg>

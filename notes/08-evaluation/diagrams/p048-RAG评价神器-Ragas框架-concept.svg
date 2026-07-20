@@ -1,33 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" role="img" width="1200" height="680" viewBox="0 0 1200 680">
-  <title>P48 8-4 RAG评价神器：Ragas框架 原创概念图</title>
-  <desc>Ragas 用哪些维度评价 RAG？。图中按顺序包含本节五个核心知识节点及解释。</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#f8fafc"/>
-      <stop offset="1" stop-color="#e0f2fe"/>
-    </linearGradient>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 z" fill="#94a3b8"/>
-    </marker>
-    <style>
-      .chapter { font: 700 22px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0369a1; }
-      .title { font: 700 32px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
-      .number { font: 700 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
-      .node { font: 700 21px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
-      .detail { font: 500 15px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
-      .hint { font: 500 20px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
-      .question { font: 700 24px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
-      .brand { font: 500 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#cbd5e1; }
-    </style>
-  </defs>
-  <rect width="1200" height="680" rx="30" fill="url(#bg)"/>
-  <text x="42" y="62" class="chapter">第 48 节 · P048 · RAG 评估</text>
-  <text x="600" y="115" text-anchor="middle" class="title">8-4 RAG评价神器：Ragas框架</text>
-  <text x="42" y="207" class="hint">本节完整知识链：概念、作用与前后关系都写在图内</text>
-  <path d="M 236 340 L 266 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 468 340 L 498 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 700 340 L 730 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 932 340 L 962 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/>
-  <rect x="42" y="245" width="190" height="190" rx="24" fill="white" stroke="#2563eb" stroke-width="4"/><circle cx="70" cy="270" r="16" fill="#2563eb"/><text x="70" y="277" text-anchor="middle" class="number">1</text><text x="137" y="307" text-anchor="middle" class="node">评测输入</text><text x="137" y="354" text-anchor="middle" class="detail">question、answer、</text><text x="137" y="376" text-anchor="middle" class="detail">contexts、ground t</text><text x="137" y="398" text-anchor="middle" class="detail">ruth</text><rect x="274" y="245" width="190" height="190" rx="24" fill="white" stroke="#0891b2" stroke-width="4"/><circle cx="302" cy="270" r="16" fill="#0891b2"/><text x="302" y="277" text-anchor="middle" class="number">2</text><text x="369" y="307" text-anchor="middle" class="node">Faithfulness</text><text x="369" y="354" text-anchor="middle" class="detail">答案陈述是否由上下</text><text x="369" y="376" text-anchor="middle" class="detail">文支持</text><rect x="506" y="245" width="190" height="190" rx="24" fill="white" stroke="#059669" stroke-width="4"/><circle cx="534" cy="270" r="16" fill="#059669"/><text x="534" y="277" text-anchor="middle" class="number">3</text><text x="601" y="307" text-anchor="middle" class="node">Answer Relevancy</text><text x="601" y="354" text-anchor="middle" class="detail">答案是否真正回应问</text><text x="601" y="376" text-anchor="middle" class="detail">题</text><rect x="738" y="245" width="190" height="190" rx="24" fill="white" stroke="#7c3aed" stroke-width="4"/><circle cx="766" cy="270" r="16" fill="#7c3aed"/><text x="766" y="277" text-anchor="middle" class="number">4</text><text x="833" y="307" text-anchor="middle" class="node">Context 指标</text><text x="833" y="354" text-anchor="middle" class="detail">召回上下文的相关性</text><text x="833" y="376" text-anchor="middle" class="detail">与覆盖</text><rect x="970" y="245" width="190" height="190" rx="24" fill="white" stroke="#ea580c" stroke-width="4"/><circle cx="998" cy="270" r="16" fill="#ea580c"/><text x="998" y="277" text-anchor="middle" class="number">5</text><text x="1065" y="307" text-anchor="middle" class="node">使用边界</text><text x="1065" y="354" text-anchor="middle" class="detail">自动评审有偏差，需</text><text x="1065" y="376" text-anchor="middle" class="detail">人工抽检</text>
-  <rect x="42" y="492" width="1116" height="132" rx="24" fill="#0f172a"/>
-  <text x="70" y="532" class="brand">学完必须能回答</text>
-  <text x="600" y="575" text-anchor="middle" class="question">Ragas 用哪些维度评价 RAG？</text>
-  <text x="1125" y="607" text-anchor="end" class="brand">原创示意图 · rag_study</text>
+  <title>P48 Ragas 四个核心指标</title>
+  <desc>用四字段评测样本计算 Faithfulness、Answer Relevancy、Context Recall 和 Context Precision，并区分生成与检索指标。</desc>
+  <defs><linearGradient id="b48" x1="0" x2="1"><stop stop-color="#faf5ff"/><stop offset="1" stop-color="#eff6ff"/></linearGradient><style>.h{font:700 22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#7e22ce}.t{font:700 32px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.n{font:700 19px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.d{font:500 14px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#475569}.f{font:600 15px ui-monospace,SFMono-Regular,monospace;fill:#334155}</style></defs>
+  <rect width="1200" height="680" rx="30" fill="url(#b48)"/>
+  <text x="44" y="58" class="h">第 8 章 · P048 · Ragas 指标原理</text>
+  <text x="600" y="105" text-anchor="middle" class="t">四字段输入，分别诊断生成质量与检索质量</text>
+  <rect x="55" y="145" width="1090" height="85" rx="22" fill="#0f172a"/>
+  <text x="600" y="180" text-anchor="middle" style="font:700 19px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">评测样本</text>
+  <text x="600" y="210" text-anchor="middle" style="font:500 16px ui-monospace,SFMono-Regular,monospace;fill:#cbd5e1">question · answer · contexts（有顺序）· ground_truth</text>
+  <rect x="55" y="265" width="525" height="145" rx="24" fill="white" stroke="#7c3aed" stroke-width="3"/><text x="317" y="302" text-anchor="middle" class="n">Faithfulness · 忠实性</text><text x="317" y="334" text-anchor="middle" class="d">拆 answer 的事实，逐条检查 contexts 是否支持</text><text x="317" y="371" text-anchor="middle" class="f">支持的答案陈述 / 全部答案陈述</text><text x="317" y="395" text-anchor="middle" class="d">诊断：有没有无依据编造</text>
+  <rect x="620" y="265" width="525" height="145" rx="24" fill="white" stroke="#2563eb" stroke-width="3"/><text x="882" y="302" text-anchor="middle" class="n">Answer Relevancy · 答案相关性</text><text x="882" y="334" text-anchor="middle" class="d">从 answer 反向生成问题，与 question 做向量相似度</text><text x="882" y="371" text-anchor="middle" class="f">mean cosine(潜在问题, 原问题)</text><text x="882" y="395" text-anchor="middle" class="d">诊断：是否答到点上、遗漏或冗余</text>
+  <rect x="55" y="440" width="525" height="145" rx="24" fill="white" stroke="#059669" stroke-width="3"/><text x="317" y="477" text-anchor="middle" class="n">Context Recall · 上下文召回率</text><text x="317" y="509" text-anchor="middle" class="d">拆 ground_truth 的事实，检查 contexts 是否覆盖</text><text x="317" y="546" text-anchor="middle" class="f">支持的标准陈述 / 全部标准陈述</text><text x="317" y="570" text-anchor="middle" class="d">诊断：回答所需事实是否找全</text>
+  <rect x="620" y="440" width="525" height="145" rx="24" fill="white" stroke="#ea580c" stroke-width="3"/><text x="882" y="477" text-anchor="middle" class="n">Context Precision · 上下文精度</text><text x="882" y="509" text-anchor="middle" class="d">逐位判断相关性，用排名位置计算 Average Precision</text><text x="882" y="546" text-anchor="middle" class="f">[0, 1, 1] → (1/2 + 2/3) / 2 ≈ 0.58</text><text x="882" y="570" text-anchor="middle" class="d">诊断：相关上下文是否排在前面</text>
+  <rect x="230" y="615" width="740" height="42" rx="18" fill="#7e22ce"/><text x="600" y="643" text-anchor="middle" style="font:600 16px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">学完必须能回答：四个指标各比较哪两个对象，又会指向哪类改进？</text>
 </svg>
