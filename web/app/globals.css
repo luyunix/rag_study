@@ -757,6 +757,63 @@ input:focus-visible {
   line-height: 1.75;
 }
 
+.mermaid-diagram {
+  position: relative;
+  min-height: 220px;
+  margin: 30px 0;
+  padding: 28px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--orange);
+  background:
+    linear-gradient(rgba(111, 143, 128, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(111, 143, 128, 0.055) 1px, transparent 1px),
+    #fff;
+  background-size: 24px 24px;
+  box-shadow: 0 12px 30px rgba(41, 34, 28, 0.08);
+}
+
+.mermaid-canvas {
+  display: grid;
+  min-width: 620px;
+  place-items: center;
+}
+
+.mermaid-canvas svg {
+  display: block;
+  width: 100%;
+  max-width: 840px;
+  height: auto;
+}
+
+.mermaid-loading {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  color: #60746a;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  transform: translate(-50%, -50%);
+}
+
+.mermaid-diagram.is-ready {
+  min-height: 0;
+}
+
+.mermaid-error {
+  margin: 30px 0;
+  padding: 18px;
+  border: 1px solid #d8c9c0;
+  background: #fff;
+  color: #6a4236;
+  font-family: var(--sans);
+  font-size: 13px;
+}
+
+.mermaid-error pre {
+  margin-bottom: 0;
+}
+
 .markdown-body :not(pre) > code {
   padding: 2px 5px;
   background: var(--paper-deep);

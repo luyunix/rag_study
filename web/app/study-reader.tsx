@@ -1,15 +1,19 @@
 "use client";
 
 import {
+  Children,
+  isValidElement,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
   type MouseEvent,
+  type ReactNode,
 } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { MermaidDiagram } from "./mermaid-diagram";
 
 type CatalogEntry = {
   page: number;
@@ -125,6 +129,20 @@ function assetUrl(entry: CatalogEntry, kind: "note" | "asr" | "diagram") {
   if (kind === "note") return `${base}/${entry.stem}.md`;
   if (kind === "asr") return `${base}/transcripts/${entry.stem}-ASR.md`;
   return `${base}/diagrams/${entry.stem}-concept.svg`;
+}
+
+function MarkdownPre({ children }: { children?: ReactNode }) {
+  const child = Children.toArray(children)[0];
+
+  if (
+    isValidElement<{ className?: string; children?: ReactNode }>(child) &&
+    child.props.className?.split(/\s+/).includes("language-mermaid")
+  ) {
+    const chart = String(child.props.children ?? "").replace(/\n$/, "");
+    return <MermaidDiagram chart={chart} />;
+  }
+
+  return <pre>{children}</pre>;
 }
 
 export function StudyReader() {
@@ -441,6 +459,7 @@ export function StudyReader() {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
+                  pre: MarkdownPre,
                   h1: ({ children }) => <h2 className="source-title">{children}</h2>,
                   h2: ({ children }) => {
                     const id = headings[headingIndex]?.id ?? headingId(String(children), headingIndex);
