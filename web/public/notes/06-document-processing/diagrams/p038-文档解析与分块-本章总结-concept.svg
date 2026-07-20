@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" width="1200" height="680" viewBox="0 0 1200 680">
+  <title>P38 6-7 本章总结 原创概念图</title>
+  <desc>文档处理章应形成哪些质量门槛？。图中按顺序包含本节五个核心知识节点及解释。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#e0f2fe"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .chapter { font: 700 22px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0369a1; }
+      .title { font: 700 32px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
+      .number { font: 700 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
+      .node { font: 700 21px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#0f172a; }
+      .detail { font: 500 15px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
+      .hint { font: 500 20px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#475569; }
+      .question { font: 700 24px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:white; }
+      .brand { font: 500 16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; fill:#cbd5e1; }
+    </style>
+  </defs>
+  <rect width="1200" height="680" rx="30" fill="url(#bg)"/>
+  <text x="42" y="62" class="chapter">第 38 节 · P038 · 文档解析与分块</text>
+  <text x="600" y="115" text-anchor="middle" class="title">6-7 本章总结</text>
+  <text x="42" y="207" class="hint">本节完整知识链：概念、作用与前后关系都写在图内</text>
+  <path d="M 236 340 L 266 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 468 340 L 498 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 700 340 L 730 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/><path d="M 932 340 L 962 340" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="42" y="245" width="190" height="190" rx="24" fill="white" stroke="#2563eb" stroke-width="4"/><circle cx="70" cy="270" r="16" fill="#2563eb"/><text x="70" y="277" text-anchor="middle" class="number">1</text><text x="137" y="307" text-anchor="middle" class="node">输入可控</text><text x="137" y="354" text-anchor="middle" class="detail">来源、版本、权限有</text><text x="137" y="376" text-anchor="middle" class="detail">记录</text><rect x="274" y="245" width="190" height="190" rx="24" fill="white" stroke="#0891b2" stroke-width="4"/><circle cx="302" cy="270" r="16" fill="#0891b2"/><text x="302" y="277" text-anchor="middle" class="number">2</text><text x="369" y="307" text-anchor="middle" class="node">解析正确</text><text x="369" y="354" text-anchor="middle" class="detail">文本/表格/版面不丢</text><text x="369" y="376" text-anchor="middle" class="detail">信息</text><rect x="506" y="245" width="190" height="190" rx="24" fill="white" stroke="#059669" stroke-width="4"/><circle cx="534" cy="270" r="16" fill="#059669"/><text x="534" y="277" text-anchor="middle" class="number">3</text><text x="601" y="307" text-anchor="middle" class="node">切块可检索</text><text x="601" y="354" text-anchor="middle" class="detail">粒度、重叠、语义边</text><text x="601" y="376" text-anchor="middle" class="detail">界可解释</text><rect x="738" y="245" width="190" height="190" rx="24" fill="white" stroke="#7c3aed" stroke-width="4"/><circle cx="766" cy="270" r="16" fill="#7c3aed"/><text x="766" y="277" text-anchor="middle" class="number">4</text><text x="833" y="307" text-anchor="middle" class="node">元数据完整</text><text x="833" y="354" text-anchor="middle" class="detail">来源、页码、标题支</text><text x="833" y="376" text-anchor="middle" class="detail">持过滤引用</text><rect x="970" y="245" width="190" height="190" rx="24" fill="white" stroke="#ea580c" stroke-width="4"/><circle cx="998" cy="270" r="16" fill="#ea580c"/><text x="998" y="277" text-anchor="middle" class="number">5</text><text x="1065" y="307" text-anchor="middle" class="node">持续评测</text><text x="1065" y="354" text-anchor="middle" class="detail">坏案例回流到解析和</text><text x="1065" y="376" text-anchor="middle" class="detail">分块策略</text>
+  <rect x="42" y="492" width="1116" height="132" rx="24" fill="#0f172a"/>
+  <text x="70" y="532" class="brand">学完必须能回答</text>
+  <text x="600" y="575" text-anchor="middle" class="question">文档处理章应形成哪些质量门槛？</text>
+  <text x="1125" y="607" text-anchor="end" class="brand">原创示意图 · rag_study</text>
+</svg>

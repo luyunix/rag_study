@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" width="1200" height="680" viewBox="0 0 1200 680">
+  <title>P45 RAG 评估章学习路线</title>
+  <desc>从已经完成的 Baseline 出发，依次学习评估标准、执行步骤、Ragas 指标、制度问答实战和迭代。</desc>
+  <defs>
+    <linearGradient id="b45" x1="0" x2="1"><stop stop-color="#eff6ff"/><stop offset="1" stop-color="#f5f3ff"/></linearGradient>
+    <marker id="a45" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#64748b"/></marker>
+    <style>.h{font:700 22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#1d4ed8}.t{font:700 32px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.n{font:700 19px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.d{font:500 15px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#475569}.p{stroke:#64748b;stroke-width:4;fill:none;marker-end:url(#a45)}</style>
+  </defs>
+  <rect width="1200" height="680" rx="30" fill="url(#b45)"/>
+  <text x="44" y="58" class="h">第 8 章 · P045 · RAG 评估导学</text>
+  <text x="600" y="110" text-anchor="middle" class="t">把“感觉变好了”变成可重复、可定位的证据</text>
+  <rect x="44" y="155" width="1112" height="92" rx="22" fill="#0f172a"/>
+  <text x="600" y="192" text-anchor="middle" style="font:700 20px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">起点：制度问答 Baseline 已经能运行</text>
+  <text x="600" y="222" text-anchor="middle" style="font:500 16px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#cbd5e1">但两道演示题正确 ≠ 系统稳定 ≠ 可以上线</text>
+  <g>
+    <rect x="44" y="315" width="190" height="145" rx="22" fill="white" stroke="#2563eb" stroke-width="3"/><text x="139" y="354" text-anchor="middle" class="n">P46 三项标准</text><text x="139" y="389" text-anchor="middle" class="d">上下文相关性</text><text x="139" y="416" text-anchor="middle" class="d">忠实性 · 答案相关性</text>
+    <rect x="274" y="315" width="190" height="145" rx="22" fill="white" stroke="#0891b2" stroke-width="3"/><text x="369" y="354" text-anchor="middle" class="n">P47 三个步骤</text><text x="369" y="389" text-anchor="middle" class="d">测试集 → 指标</text><text x="369" y="416" text-anchor="middle" class="d">执行并收集结果</text>
+    <rect x="504" y="315" width="190" height="145" rx="22" fill="white" stroke="#059669" stroke-width="3"/><text x="599" y="354" text-anchor="middle" class="n">P48 Ragas</text><text x="599" y="389" text-anchor="middle" class="d">四个核心指标</text><text x="599" y="416" text-anchor="middle" class="d">理解计算过程</text>
+    <rect x="734" y="315" width="190" height="145" rx="22" fill="white" stroke="#7c3aed" stroke-width="3"/><text x="829" y="354" text-anchor="middle" class="n">P49 实战</text><text x="829" y="389" text-anchor="middle" class="d">四字段 Dataset</text><text x="829" y="416" text-anchor="middle" class="d">评估制度问答</text>
+    <rect x="964" y="315" width="192" height="145" rx="22" fill="white" stroke="#ea580c" stroke-width="3"/><text x="1060" y="354" text-anchor="middle" class="n">P50 迭代</text><text x="1060" y="389" text-anchor="middle" class="d">分析具体坏例</text><text x="1060" y="416" text-anchor="middle" class="d">改一项再评一次</text>
+  </g>
+  <path d="M234 387H268M464 387H498M694 387H728M924 387H958" class="p"/>
+  <rect x="185" y="535" width="830" height="90" rx="24" fill="#1d4ed8"/>
+  <text x="600" y="570" text-anchor="middle" style="font:700 20px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">学完必须能回答</text>
+  <text x="600" y="603" text-anchor="middle" style="font:500 17px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:#dbeafe">一次 RAG 修改究竟改善了哪里，又破坏了哪里？</text>
+</svg>

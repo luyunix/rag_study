@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" width="1200" height="680" viewBox="0 0 1200 680">
+  <title>P46 RAG 评估的三项标准</title>
+  <desc>问题、检索上下文、生成答案组成三角形，三条边分别代表上下文相关性、忠实性和答案相关性。</desc>
+  <defs><linearGradient id="b46" x1="0" x2="1"><stop stop-color="#ecfeff"/><stop offset="1" stop-color="#f0fdf4"/></linearGradient><marker id="a46" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#64748b"/></marker><style>.h{font:700 22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0e7490}.t{font:700 32px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.n{font:700 22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.d{font:500 16px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#475569}.e{font:700 19px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.p{stroke:#64748b;stroke-width:5;fill:none;marker-end:url(#a46)}</style></defs>
+  <rect width="1200" height="680" rx="30" fill="url(#b46)"/>
+  <text x="44" y="58" class="h">第 8 章 · P046 · 三项评估标准</text>
+  <text x="600" y="108" text-anchor="middle" class="t">检查 Question、Context、Answer 的三条关系</text>
+  <path d="M340 468L578 220" class="p"/><path d="M622 220L860 468" class="p"/><path d="M810 500H390" class="p"/>
+  <circle cx="600" cy="192" r="98" fill="white" stroke="#2563eb" stroke-width="4"/><text x="600" y="185" text-anchor="middle" class="n">用户问题</text><text x="600" y="218" text-anchor="middle" class="d">Question</text>
+  <circle cx="310" cy="500" r="112" fill="white" stroke="#059669" stroke-width="4"/><text x="310" y="490" text-anchor="middle" class="n">检索上下文</text><text x="310" y="524" text-anchor="middle" class="d">Context</text>
+  <circle cx="890" cy="500" r="112" fill="white" stroke="#7c3aed" stroke-width="4"/><text x="890" y="490" text-anchor="middle" class="n">生成答案</text><text x="890" y="524" text-anchor="middle" class="d">Answer</text>
+  <rect x="230" y="270" width="260" height="77" rx="18" fill="#cffafe"/><text x="360" y="300" text-anchor="middle" class="e">上下文相关性</text><text x="360" y="329" text-anchor="middle" class="d">找得对不对？</text>
+  <rect x="710" y="270" width="260" height="77" rx="18" fill="#ede9fe"/><text x="840" y="300" text-anchor="middle" class="e">答案相关性</text><text x="840" y="329" text-anchor="middle" class="d">有没有答到点上？</text>
+  <rect x="470" y="450" width="260" height="77" rx="18" fill="#dcfce7"/><text x="600" y="480" text-anchor="middle" class="e">忠实性</text><text x="600" y="509" text-anchor="middle" class="d">有没有无依据编造？</text>
+  <rect x="250" y="620" width="700" height="42" rx="18" fill="#0f172a"/><text x="600" y="648" text-anchor="middle" style="font:600 16px -apple-system,BlinkMacSystemFont,'PingFang SC';fill:white">学完必须能回答：同一条坏例属于检索失败、事实编造，还是答非所问？</text>
+</svg>
