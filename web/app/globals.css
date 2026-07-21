@@ -763,6 +763,10 @@ input:focus-visible {
   margin: 30px 0;
   padding: 28px;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--line);
   border-left: 4px solid var(--orange);
   background:
@@ -775,15 +779,30 @@ input:focus-visible {
 
 .mermaid-canvas {
   display: grid;
-  min-width: 620px;
+  min-width: 0;
   place-items: center;
 }
 
 .mermaid-canvas svg {
   display: block;
-  width: 100%;
-  max-width: 840px;
+  width: max(100%, var(--mermaid-readable-width, 720px));
+  max-width: none !important;
   height: auto;
+}
+
+/*
+ * Mermaid measures HTML labels outside .markdown-body before inserting the
+ * SVG. Without this reset, the article's roomy serif paragraph line-height is
+ * applied only after measurement, so second lines are clipped by foreignObject.
+ */
+.mermaid-canvas .nodeLabel,
+.mermaid-canvas .edgeLabel,
+.mermaid-canvas .nodeLabel p,
+.mermaid-canvas .edgeLabel p {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.45;
 }
 
 .mermaid-loading {

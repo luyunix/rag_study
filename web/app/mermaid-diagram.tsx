@@ -1,10 +1,24 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useState, type CSSProperties } from "react";
 
 type MermaidInstance = (typeof import("mermaid"))["default"];
 
 let mermaidPromise: Promise<MermaidInstance> | null = null;
+
+function readableWidthFromSvg(renderedSvg: string) {
+  const viewBox = renderedSvg.match(
+    /\bviewBox=["']\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+[\d.]+/i,
+  );
+  const viewBoxWidth = Number(viewBox?.[1]);
+
+  if (!Number.isFinite(viewBoxWidth)) return 720;
+
+  // Mermaid defaults to width: 100%, which can shrink a wide graph until
+  // 16px labels become illegible. Keep labels near their designed size and
+  // let the existing figure scroll horizontally when the graph is wide.
+  return Math.max(720, Math.ceil(viewBoxWidth * 0.92));
+}
 
 function loadMermaid() {
   if (!mermaidPromise) {
@@ -42,17 +56,22 @@ export function MermaidDiagram({ chart }: { chart: string }) {
   const diagramId = `mermaid-${reactId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const [svg, setSvg] = useState("");
   const [error, setError] = useState(false);
+  const [readableWidth, setReadableWidth] = useState(720);
 
   useEffect(() => {
     let active = true;
 
     setSvg("");
     setError(false);
+    setReadableWidth(720);
 
     loadMermaid()
       .then((mermaid) => mermaid.render(diagramId, chart))
       .then(({ svg: renderedSvg }) => {
-        if (active) setSvg(renderedSvg);
+        if (active) {
+          setReadableWidth(readableWidthFromSvg(renderedSvg));
+          setSvg(renderedSvg);
+        }
       })
       .catch(() => {
         if (active) setError(true);
@@ -75,7 +94,11 @@ export function MermaidDiagram({ chart }: { chart: string }) {
   }
 
   return (
-    <figure className={`mermaid-diagram ${svg ? "is-ready" : "is-rendering"}`}>
+    <figure
+      className={`mermaid-diagram ${svg ? "is-ready" : "is-rendering"}`}
+      style={{ "--mermaid-readable-width": `${readableWidth}px` } as CSSProperties}
+      tabIndex={svg ? 0 : undefined}
+    >
       <div
         className="mermaid-canvas"
         role="img"

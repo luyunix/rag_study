@@ -73,3 +73,15 @@ test("ships the complete course assets and bespoke metadata", async () => {
     ),
   ]);
 });
+
+test("keeps Mermaid labels readable inside article typography", async () => {
+  const [component, styles] = await Promise.all([
+    readFile(new URL("app/mermaid-diagram.tsx", root), "utf8"),
+    readFile(new URL("app/globals.css", root), "utf8"),
+  ]);
+
+  assert.match(component, /--mermaid-readable-width/);
+  assert.match(styles, /width:\s*max\(100%,\s*var\(--mermaid-readable-width/);
+  assert.match(styles, /\.mermaid-canvas\s+\.nodeLabel p/);
+  assert.match(styles, /line-height:\s*1\.45/);
+});
