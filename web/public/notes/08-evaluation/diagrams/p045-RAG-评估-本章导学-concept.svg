@@ -17,7 +17,7 @@
     <rect x="274" y="315" width="190" height="145" rx="22" fill="white" stroke="#0891b2" stroke-width="3"/><text x="369" y="354" text-anchor="middle" class="n">P47 三个步骤</text><text x="369" y="389" text-anchor="middle" class="d">测试集 → 指标</text><text x="369" y="416" text-anchor="middle" class="d">执行并收集结果</text>
     <rect x="504" y="315" width="190" height="145" rx="22" fill="white" stroke="#059669" stroke-width="3"/><text x="599" y="354" text-anchor="middle" class="n">P48 Ragas</text><text x="599" y="389" text-anchor="middle" class="d">四个核心指标</text><text x="599" y="416" text-anchor="middle" class="d">理解计算过程</text>
     <rect x="734" y="315" width="190" height="145" rx="22" fill="white" stroke="#7c3aed" stroke-width="3"/><text x="829" y="354" text-anchor="middle" class="n">P49 实战</text><text x="829" y="389" text-anchor="middle" class="d">四字段 Dataset</text><text x="829" y="416" text-anchor="middle" class="d">评估制度问答</text>
-    <rect x="964" y="315" width="192" height="145" rx="22" fill="white" stroke="#ea580c" stroke-width="3"/><text x="1060" y="354" text-anchor="middle" class="n">P50 迭代</text><text x="1060" y="389" text-anchor="middle" class="d">分析具体坏例</text><text x="1060" y="416" text-anchor="middle" class="d">改一项再评一次</text>
+    <rect x="964" y="315" width="192" height="145" rx="22" fill="white" stroke="#3157d5" stroke-width="3"/><text x="1060" y="354" text-anchor="middle" class="n">P50 迭代</text><text x="1060" y="389" text-anchor="middle" class="d">分析具体坏例</text><text x="1060" y="416" text-anchor="middle" class="d">改一项再评一次</text>
   </g>
   <path d="M234 387H268M464 387H498M694 387H728M924 387H958" class="p"/>
   <rect x="185" y="535" width="830" height="90" rx="24" fill="#1d4ed8"/>

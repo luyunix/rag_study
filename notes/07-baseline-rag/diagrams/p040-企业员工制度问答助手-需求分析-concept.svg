@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" role="img" width="1200" height="680" viewBox="0 0 1200 680">
   <title>P40 企业员工制度问答助手需求分析</title>
   <desc>员工和 HR 的痛点、统一问答目标，以及员工手册 PDF、差旅标准 PDF、住宿标准 Excel 三类依赖数据。</desc>
-  <defs><linearGradient id="bg40" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff7ed"/><stop offset="1" stop-color="#eff6ff"/></linearGradient><marker id="a40" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#64748b"/></marker><style>.h{font:700 22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#c2410c}.t{font:700 31px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.n{font:700 20px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.d{font:500 16px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#475569}.p{stroke:#64748b;stroke-width:4;fill:none;marker-end:url(#a40)}</style></defs>
+  <defs><linearGradient id="bg40" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4f6fb"/><stop offset="1" stop-color="#eff6ff"/></linearGradient><marker id="a40" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#64748b"/></marker><style>.h{font:700 22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#203ea8}.t{font:700 31px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.n{font:700 20px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#0f172a}.d{font:500 16px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#475569}.p{stroke:#64748b;stroke-width:4;fill:none;marker-end:url(#a40)}</style></defs>
   <rect width="1200" height="680" rx="30" fill="url(#bg40)"/>
   <text x="44" y="58" class="h">第 7 章 · P040 · 需求分析</text>
   <text x="600" y="108" text-anchor="middle" class="t">先明确谁遇到什么问题，再决定系统读取哪些权威资料</text>
-  <rect x="45" y="170" width="250" height="170" rx="22" fill="white" stroke="#ea580c" stroke-width="3"/>
+  <rect x="45" y="170" width="250" height="170" rx="22" fill="white" stroke="#3157d5" stroke-width="3"/>
   <text x="170" y="215" text-anchor="middle" class="n">员工痛点</text><text x="170" y="251" text-anchor="middle" class="d">制度散落多个平台</text><text x="170" y="279" text-anchor="middle" class="d">搜索效率低</text><text x="170" y="307" text-anchor="middle" class="d">差旅标准容易误报</text>
   <rect x="905" y="170" width="250" height="170" rx="22" fill="white" stroke="#7c3aed" stroke-width="3"/>
   <text x="1030" y="215" text-anchor="middle" class="n">HR 痛点</text><text x="1030" y="251" text-anchor="middle" class="d">重复回答考勤与请假</text><text x="1030" y="279" text-anchor="middle" class="d">沟通成本高</text><text x="1030" y="307" text-anchor="middle" class="d">规则难统一核对</text>

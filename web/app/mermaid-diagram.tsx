@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { DiagramLightbox } from "./diagram-lightbox";
 
 type MermaidInstance = (typeof import("mermaid"))["default"];
@@ -30,11 +30,11 @@ function loadMermaid() {
         theme: "base",
         themeVariables: {
           background: "#ffffff",
-          primaryColor: "#f3f6f4",
-          primaryTextColor: "#292d2a",
-          primaryBorderColor: "#6f8f80",
-          lineColor: "#6f8f80",
-          secondaryColor: "#eef2ef",
+          primaryColor: "#eef2ff",
+          primaryTextColor: "#15243a",
+          primaryBorderColor: "#3157d5",
+          lineColor: "#6d7888",
+          secondaryColor: "#f4f6fb",
           tertiaryColor: "#ffffff",
           fontFamily:
             '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif',
@@ -58,13 +58,35 @@ function loadMermaid() {
 export function MermaidDiagram({ chart }: { chart: string }) {
   const reactId = useId();
   const diagramId = `mermaid-${reactId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
+  const figureRef = useRef<HTMLElement>(null);
   const [svg, setSvg] = useState("");
   const [error, setError] = useState(false);
   const [readableWidth, setReadableWidth] = useState(720);
   const [expanded, setExpanded] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
   const closeExpanded = useCallback(() => setExpanded(false), []);
 
   useEffect(() => {
+    const figure = figureRef.current;
+    if (!figure || typeof IntersectionObserver === "undefined") {
+      setShouldRender(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setShouldRender(true);
+        observer.disconnect();
+      },
+      { rootMargin: "500px 0px" },
+    );
+    observer.observe(figure);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!shouldRender) return undefined;
     let active = true;
 
     Promise.resolve()
@@ -93,7 +115,7 @@ export function MermaidDiagram({ chart }: { chart: string }) {
     return () => {
       active = false;
     };
-  }, [chart, diagramId]);
+  }, [chart, diagramId, shouldRender]);
 
   if (error) {
     return (
@@ -109,6 +131,7 @@ export function MermaidDiagram({ chart }: { chart: string }) {
   return (
     <>
       <figure
+        ref={figureRef}
         className={`mermaid-diagram ${svg ? "is-ready" : "is-rendering"}`}
         style={{ "--mermaid-readable-width": `${readableWidth}px` } as CSSProperties}
       >
@@ -129,7 +152,11 @@ export function MermaidDiagram({ chart }: { chart: string }) {
           />
         </div>
         {svg && <p className="diagram-scroll-hint">图中文字较多时，可左右滑动；也可以放大查看。</p>}
-        {!svg && <span className="mermaid-loading">正在绘制知识图…</span>}
+        {!svg && (
+          <span className="mermaid-loading">
+            {shouldRender ? "正在绘制知识图…" : "滚动到图表附近后自动绘制…"}
+          </span>
+        )}
       </figure>
 
       {expanded && svg && (
