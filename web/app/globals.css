@@ -1066,6 +1066,72 @@ input:focus-visible {
   display: none;
 }
 
+.teacher-explanation {
+  margin: 58px 0 12px;
+  padding: 34px 38px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--orange);
+  background: #fff;
+  box-shadow: 0 16px 38px rgba(41, 34, 28, 0.08);
+}
+
+.teacher-explanation-heading h2 {
+  margin: 9px 0 10px;
+  padding: 0;
+  border: 0;
+  font-size: 25px;
+}
+
+.teacher-explanation-heading h2::before {
+  display: none;
+}
+
+.teacher-explanation-heading > p {
+  margin-bottom: 25px;
+  color: #5d625e;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.teacher-transcript-flow {
+  display: grid;
+  gap: 0;
+}
+
+.teacher-paragraph {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 18px;
+  padding: 19px 0;
+  border-top: 1px solid var(--line);
+}
+
+.teacher-paragraph time {
+  padding-top: 5px;
+  color: var(--orange);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.teacher-paragraph p {
+  margin: 0;
+  color: #353a36;
+  font-size: 15.5px;
+  line-height: 1.95;
+}
+
+.teacher-transcript-note {
+  margin: 22px 0 0 !important;
+  padding: 12px 15px;
+  background: var(--paper-deep);
+  color: #687069;
+  font-family: var(--sans);
+  font-size: 11px !important;
+  line-height: 1.7 !important;
+}
+
 @media (max-width: 1180px) {
   :root {
     --sidebar: 280px;
@@ -1241,6 +1307,19 @@ input:focus-visible {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
+  }
+
+  .teacher-explanation {
+    padding: 26px 20px;
+  }
+
+  .teacher-paragraph {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .teacher-paragraph time {
+    padding-top: 0;
   }
 
   .lesson-check {

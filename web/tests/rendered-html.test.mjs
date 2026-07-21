@@ -34,7 +34,8 @@ test("server-renders the RAG Study reader", async () => {
   assert.match(html, /RAG Study/);
   assert.match(html, /89 节完整学习笔记/);
   assert.match(html, /搜索章节、概念或 P 编号/);
-  assert.match(html, /精读笔记/);
+  assert.match(html, /完整讲解/);
+  assert.match(html, /保留推导、例子、补充说明和使用边界/);
   assert.match(html, /语音转写 ASR/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
 });

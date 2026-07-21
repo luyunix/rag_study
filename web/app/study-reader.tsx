@@ -36,6 +36,11 @@ type Heading = {
   id: string;
 };
 
+type TeacherParagraph = {
+  time: string;
+  text: string;
+};
+
 const chapters = [
   { start: 1, end: 1, dir: "01-course-guide", title: "课程导学", short: "导学" },
   { start: 2, end: 7, dir: "02-rag-foundations", title: "RAG 基础", short: "基础" },
@@ -145,12 +150,81 @@ function MarkdownPre({ children }: { children?: ReactNode }) {
   return <pre>{children}</pre>;
 }
 
+const transcriptCorrections: [RegExp, string][] = [
+  [/\b(?:IG-AS|IGAS|RAG-AS)\b/gi, "Ragas"],
+  [/\bIG\b/g, "RAG"],
+  [/大[远原圆员业]模型/g, "大语言模型"],
+  [/删下文|善下文|善加文|上下完/g, "上下文"],
+  [/中时性|中石性|中实性|中程度/g, "忠实性"],
+  [/减锁/g, "检索"],
+  [/招回|招肥|招呼/g, "召回"],
+  [/孕妇/g, "用户"],
+  [/生存/g, "生成"],
+  [/Inventive|inbattery/gi, "Embedding"],
+  [/Jensen/gi, "JSON"],
+  [/数据级|数据机|data-side/gi, "数据集"],
+  [/GT关注|关注标准答案|官处标准答案/g, "ground truth 标准答案"],
+  [/寒浮其持/g, "含糊其辞"],
+  [/余选相似度|逾选相似度/g, "余弦相似度"],
+  [/闯入/g, "传入"],
+  [/便利问题列表/g, "遍历问题列表"],
+];
+
+function cleanTranscriptText(text: string) {
+  return transcriptCorrections
+    .reduce((value, [pattern, replacement]) => value.replace(pattern, replacement), text)
+    .replace(/\s+/g, " ")
+    .replace(/\s+([，。！？；：])/g, "$1")
+    .trim();
+}
+
+function extractTeacherParagraphs(asr: string): TeacherParagraph[] {
+  const segments: TeacherParagraph[] = [];
+  let currentTime = "";
+  let started = false;
+
+  for (const rawLine of asr.split("\n")) {
+    const line = rawLine.trim();
+    const timestamp = line.match(/^##\s+(\d{2}:\d{2}:\d{2})[–-]/);
+
+    if (timestamp) {
+      started = true;
+      currentTime = timestamp[1].replace(/^00:/, "");
+      continue;
+    }
+
+    if (!started || !line || line.startsWith("#") || line.startsWith(">")) continue;
+    segments.push({ time: currentTime, text: cleanTranscriptText(line) });
+  }
+
+  const paragraphs: TeacherParagraph[] = [];
+  let block: TeacherParagraph | null = null;
+
+  for (const segment of segments) {
+    if (!block) {
+      block = { ...segment };
+      continue;
+    }
+
+    if (block.text.length < 330) {
+      block.text = `${block.text}${segment.text}`;
+    } else {
+      paragraphs.push(block);
+      block = { ...segment };
+    }
+  }
+
+  if (block) paragraphs.push(block);
+  return paragraphs;
+}
+
 export function StudyReader() {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [activePage, setActivePage] = useState(48);
   const [expandedChapter, setExpandedChapter] = useState("08-evaluation");
   const [mode, setMode] = useState<"note" | "asr">("note");
   const [markdown, setMarkdown] = useState("");
+  const [teacherTranscript, setTeacherTranscript] = useState("");
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
@@ -204,6 +278,18 @@ export function StudyReader() {
   }, [activeEntry, mode]);
 
   useEffect(() => {
+    if (!activeEntry) return;
+    setTeacherTranscript("");
+    fetch(encodeURI(assetUrl(activeEntry, "asr")))
+      .then((response) => {
+        if (!response.ok) throw new Error("转写加载失败");
+        return response.text();
+      })
+      .then((text) => setTeacherTranscript(text))
+      .catch(() => setTeacherTranscript(""));
+  }, [activeEntry]);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
@@ -241,6 +327,10 @@ export function StudyReader() {
   }, [catalog, search]);
 
   const headings = useMemo(() => extractHeadings(markdown), [markdown]);
+  const teacherParagraphs = useMemo(
+    () => extractTeacherParagraphs(teacherTranscript),
+    [teacherTranscript],
+  );
   const glossary = glossaryByChapter[activeChapter.dir] ?? [
     { label: activeChapter.short, text: `本章围绕“${activeChapter.title}”建立完整知识链。` },
     { label: "校正版", text: "正文按原声顺序重写，并修正语音识别中的技术术语。" },
@@ -409,8 +499,8 @@ export function StudyReader() {
             </div>
             <h1>{activeEntry ? cleanTitle(activeEntry.title) : "正在载入课程目录"}</h1>
             <p>
-              先读通顺的概念讲解，再用原创知识图建立结构；需要核对老师原话时，
-              随时切换到带时间戳的完整 ASR。
+              正文按老师的讲解顺序展开，保留推导、例子、补充说明和使用边界；
+              原创知识图负责建立结构，完整 ASR 负责逐句核对原声。
             </p>
             <div className="hero-actions">
               <button className={completed.has(activePage) ? "complete-button completed" : "complete-button"} onClick={toggleComplete}>
@@ -427,13 +517,13 @@ export function StudyReader() {
           <div className="content-toolbar">
             <div className="mode-tabs" role="tablist" aria-label="阅读模式">
               <button className={mode === "note" ? "active" : ""} onClick={() => setMode("note")}>
-                精读笔记
+                完整讲解
               </button>
               <button className={mode === "asr" ? "active" : ""} onClick={() => setMode("asr")}>
                 语音转写 ASR
               </button>
             </div>
-            <span>{mode === "note" ? "术语已校正 · 按视频顺序" : "原始识别 · 带时间戳"}</span>
+            <span>{mode === "note" ? "术语已校正 · 保留老师补充说明" : "原始识别 · 带时间戳"}</span>
           </div>
 
           {mode === "note" && activeEntry && (
@@ -456,7 +546,8 @@ export function StudyReader() {
                 <p>正在翻到这一节…</p>
               </div>
             ) : (
-              <ReactMarkdown
+              <>
+                <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
                   pre: MarkdownPre,
@@ -499,9 +590,34 @@ export function StudyReader() {
                     );
                   },
                 }}
-              >
-                {markdown}
-              </ReactMarkdown>
+                >
+                  {markdown}
+                </ReactMarkdown>
+
+                {mode === "note" && teacherParagraphs.length > 0 && (
+                  <section className="teacher-explanation" aria-labelledby="teacher-explanation-title">
+                    <div className="teacher-explanation-heading">
+                      <span className="section-kicker">老师补充讲解</span>
+                      <h2 id="teacher-explanation-title">把视频里的推导和例子一起保留下来</h2>
+                      <p>
+                        下面按音轨顺序整理老师的完整口头说明，并校正常见术语误识别。
+                        它不是另一份要点，而是用于补回正文压缩时容易遗漏的解释过程。
+                      </p>
+                    </div>
+                    <div className="teacher-transcript-flow">
+                      {teacherParagraphs.map((paragraph, index) => (
+                        <div className="teacher-paragraph" key={`${paragraph.time}-${index}`}>
+                          <time>{paragraph.time}</time>
+                          <p>{paragraph.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="teacher-transcript-note">
+                      个别专有名词仍可能受原始识别影响；需要逐句确认时，可切换到“语音转写 ASR”。
+                    </p>
+                  </section>
+                )}
+              </>
             )}
           </article>
 
