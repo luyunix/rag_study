@@ -151,6 +151,51 @@ function extractConclusion(markdown: string) {
   return paragraph || "先建立本节的核心判断，再沿着老师的推导、案例和边界条件完整理解。";
 }
 
+function markdownSection(markdown: string, title: string) {
+  const lines = markdown.split("\n");
+  const start = lines.findIndex((line) => line.trim() === `## ${title}`);
+  if (start < 0) return "";
+  const next = lines.findIndex((line, index) => index > start && /^##\s+/.test(line));
+  return lines.slice(start + 1, next < 0 ? undefined : next).join("\n").trim();
+}
+
+function explanationMarkdown(markdown: string) {
+  const firstSection = markdown.search(/^##\s+/m);
+  if (firstSection < 0) return markdown;
+
+  const sections = markdown
+    .slice(firstSection)
+    .split(/(?=^##\s+)/m)
+    .map((section) => section.trim())
+    .filter(Boolean);
+
+  return sections
+    .filter((section) => !/^##\s+(完整原声逐段记录|自测|学完检查)\s*$/m.test(section.split("\n")[0]))
+    .map((section) => {
+      if (!section.startsWith("## 这节到底讲什么")) return section;
+      const body = section.replace(/^##\s+这节到底讲什么\s*\n+/, "");
+      const paragraphs = body.split(/\n\s*\n/).filter((paragraph) => paragraph.trim());
+      const expanded = paragraphs.slice(1);
+      return expanded.length ? `## 先把结论讲透\n\n${expanded.join("\n\n")}` : "";
+    })
+    .filter(Boolean)
+    .join("\n\n");
+}
+
+function numberedItems(markdown: string, title: string) {
+  return markdownSection(markdown, title)
+    .split("\n")
+    .map((line) => line.match(/^\d+\.\s+(.+)$/)?.[1]?.trim())
+    .filter((item): item is string => Boolean(item));
+}
+
+function checklistItems(markdown: string) {
+  return markdownSection(markdown, "学完检查")
+    .split("\n")
+    .map((line) => line.match(/^-\s+\[[ xX]\]\s+(.+)$/)?.[1]?.trim())
+    .filter((item): item is string => Boolean(item));
+}
+
 function assetUrl(entry: CatalogEntry, kind: "note" | "asr" | "diagram") {
   const chapter = chapterFor(entry.page);
   const base = `/notes/${chapter.dir}`;
@@ -247,6 +292,7 @@ export function StudyReader() {
   const [expandedChapter, setExpandedChapter] = useState("08-evaluation");
   const [mode, setMode] = useState<"note" | "asr">("note");
   const [markdown, setMarkdown] = useState("");
+  const [noteMarkdown, setNoteMarkdown] = useState("");
   const [teacherTranscript, setTeacherTranscript] = useState("");
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -292,7 +338,10 @@ export function StudyReader() {
         if (!response.ok) throw new Error("内容加载失败");
         return response.text();
       })
-      .then((text) => setMarkdown(text))
+      .then((text) => {
+        setMarkdown(text);
+        if (mode === "note") setNoteMarkdown(text);
+      })
       .catch(() => setMarkdown("# 暂时无法读取这一节\n\n请稍后刷新页面重试。"))
       .finally(() => setLoading(false));
 
@@ -333,6 +382,7 @@ export function StudyReader() {
 
   const selectPage = useCallback((page: number) => {
     setLoading(true);
+    setNoteMarkdown("");
     setTeacherTranscript("");
     setActivePage(page);
     setExpandedChapter(chapterFor(page).dir);
@@ -355,29 +405,45 @@ export function StudyReader() {
       .slice(0, 10);
   }, [catalog, search]);
 
-  const headings = useMemo(() => extractHeadings(markdown), [markdown]);
-  const conclusion = useMemo(() => extractConclusion(markdown), [markdown]);
+  const lessonMarkdown = noteMarkdown || (mode === "note" ? markdown : "");
+  const headings = useMemo(() => extractHeadings(lessonMarkdown), [lessonMarkdown]);
+  const conclusion = useMemo(() => extractConclusion(lessonMarkdown), [lessonMarkdown]);
   const logicSteps = useMemo(
-    () =>
-      headings
+    () => {
+      const detailedSteps = headings.filter((heading) => heading.level === 3).slice(0, 3);
+      if (detailedSteps.length >= 3) return detailedSteps;
+      return headings
         .filter(
           (heading) =>
             heading.level === 2 &&
-            !/这节到底讲什么|校正版讲解时间线|完整原声|自测/.test(heading.text),
+            !/这节到底讲什么|辅助流程图|正文讲解|校正版讲解时间线|完整原声|自测|学完检查/.test(heading.text),
         )
-        .slice(0, 3),
+        .slice(0, 3);
+    },
     [headings],
   );
   const teacherParagraphs = useMemo(
     () => extractTeacherParagraphs(teacherTranscript),
     [teacherTranscript],
   );
-  const glossary = glossaryByChapter[activeChapter.dir] ?? [
-    { label: activeChapter.short, text: `本章围绕“${activeChapter.title}”建立完整知识链。` },
-    { label: "校正版", text: "正文按原声顺序重写，并修正语音识别中的技术术语。" },
-    { label: "完整 ASR", text: "保留逐段时间戳，用于核对老师的原始讲解。" },
-  ];
-
+  const displayMarkdown = useMemo(
+    () => (mode === "note" ? explanationMarkdown(markdown) : markdown),
+    [markdown, mode],
+  );
+  const reviewQuestions = useMemo(
+    () => numberedItems(lessonMarkdown, "自测"),
+    [lessonMarkdown],
+  );
+  const reviewChecklist = useMemo(() => {
+    const items = checklistItems(lessonMarkdown);
+    return items.length
+      ? items
+      : [
+          "我能不看视频解释本节核心概念",
+          "我能指出它在 RAG 数据流中的位置",
+          "我核对了原创图或完整 ASR",
+        ];
+  }, [lessonMarkdown]);
   const totalMinutes = catalog ? Math.round(catalog.duration_seconds / 60) : 823;
   const progress = catalog ? Math.round((completed.size / catalog.sections) * 100) : 0;
 
@@ -390,7 +456,10 @@ export function StudyReader() {
   };
 
   const toggleCheck = (index: number) => {
-    const next = checks.map((checked, itemIndex) => (index === itemIndex ? !checked : checked));
+    const next = Array.from(
+      { length: Math.max(checks.length, reviewChecklist.length, index + 1) },
+      (_, itemIndex) => (index === itemIndex ? !checks[itemIndex] : Boolean(checks[itemIndex])),
+    );
     setChecks(next);
     window.localStorage.setItem(`rag-study-checks-${activePage}`, JSON.stringify(next));
   };
@@ -617,6 +686,7 @@ export function StudyReader() {
               <button
                 className={mode === "note" ? "active" : ""}
                 onClick={() => {
+                  if (mode === "note") return;
                   setLoading(true);
                   setMode("note");
                 }}
@@ -626,6 +696,7 @@ export function StudyReader() {
               <button
                 className={mode === "asr" ? "active" : ""}
                 onClick={() => {
+                  if (mode === "asr") return;
                   setLoading(true);
                   setMode("asr");
                 }}
@@ -636,111 +707,154 @@ export function StudyReader() {
             <span>{mode === "note" ? "术语已校正 · 保留老师补充说明" : "原始识别 · 带时间戳"}</span>
           </div>
 
+          <section className="content-section teacher-article" id="article">
+            <div className="section-heading">
+              <div>
+                <span>03 / FULL EXPLANATION</span>
+                <h2>{mode === "note" ? "老师的完整讲解" : "完整语音转写"}</h2>
+              </div>
+              <p>
+                {mode === "note"
+                  ? "保留推导、案例、反例、补充判断和使用边界，只删去重复语气词。"
+                  : "保留时间戳与原始表达，适合逐句核对老师原声。"}
+              </p>
+            </div>
+
+            <div className="article-intro">
+              <strong>{mode === "note" ? "这部分不是要点复述" : "这部分用于核对原话"}</strong>
+              <p>
+                {mode === "note"
+                  ? "按老师的讲解顺序还原为什么得出结论、用了什么例子、指标之间怎样区分，以及结论在什么条件下成立。"
+                  : "ASR 保留完整口头讲解和时间位置；遇到专有名词误识别时，以校正版完整讲解为准。"}
+              </p>
+            </div>
+
+            <div className={`markdown-body ${loading ? "is-loading" : ""}`}>
+              {loading ? (
+                <div className="reading-loader">
+                  <span />
+                  <span />
+                  <span />
+                  <p>正在翻到这一节…</p>
+                </div>
+              ) : (
+                <>
+                  <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    pre: MarkdownPre,
+                    h1: ({ children }) => <h2 className="source-title">{children}</h2>,
+                    h2: ({ children }) => {
+                      const text = String(children).replace(/[*`]/g, "");
+                      const id = headingIds.get(text) ?? headingId(text);
+                      return <h2 id={id}>{children}</h2>;
+                    },
+                    h3: ({ children }) => {
+                      const text = String(children).replace(/[*`]/g, "");
+                      const id = headingIds.get(text) ?? headingId(text);
+                      return <h3 id={id}>{children}</h3>;
+                    },
+                    a: ({ href, children }) => (
+                      <a
+                        href={href?.startsWith("./") ? `${markdownBase}${href.slice(2)}` : href}
+                        onClick={(event) => onMarkdownLink(event, href)}
+                        target={href?.startsWith("http") ? "_blank" : undefined}
+                        rel={href?.startsWith("http") ? "noreferrer" : undefined}
+                      >
+                        {children}
+                      </a>
+                    ),
+                    img: ({ src, alt }) => {
+                      const resolved = src?.startsWith("./")
+                        ? `${markdownBase}${src.slice(2)}`
+                        : src;
+                      // The dedicated figure below provides a larger, captioned version.
+                      if (resolved?.includes("-concept.svg")) return null;
+                      // eslint-disable-next-line @next/next/no-img-element
+                      return <img src={resolved} alt={alt ?? ""} />;
+                    },
+                    code: ({ className, children }) => {
+                      const language = className?.replace("language-", "") || "text";
+                      return (
+                        <code className={className} data-language={language}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                  >
+                    {displayMarkdown}
+                  </ReactMarkdown>
+
+                  {mode === "note" && teacherParagraphs.length > 0 && (
+                    <section className="teacher-explanation" aria-labelledby="teacher-explanation-title">
+                      <div className="teacher-explanation-heading">
+                        <span className="section-kicker">按原声补全</span>
+                        <h2 id="teacher-explanation-title">老师在视频里还展开讲了什么</h2>
+                        <p>
+                          下面继续按音轨顺序保留老师的口头推导、例子和补充判断，并校正常见术语误识别。
+                        </p>
+                      </div>
+                      <div className="teacher-transcript-flow">
+                        {teacherParagraphs.map((paragraph, index) => (
+                          <div className="teacher-paragraph" key={`${paragraph.time}-${index}`}>
+                            <time>{paragraph.time}</time>
+                            <p>{paragraph.text}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="teacher-transcript-note">
+                        个别专有名词仍可能受原始识别影响；需要逐句确认时，可切换到“语音转写 ASR”。
+                      </p>
+                    </section>
+                  )}
+                </>
+              )}
+            </div>
+          </section>
+
           {mode === "note" && activeEntry && (
-            <ConceptFigure page={activePage} src={encodeURI(assetUrl(activeEntry, "diagram"))} />
+            <section className="diagram-card" id="diagram">
+              <div className="diagram-copy">
+                <span className="eyebrow-label">CONCEPT MAP</span>
+                <h2>把本节逻辑画出来</h2>
+                <p>先看关系，再回到上面的推导、例子和边界条件。</p>
+              </div>
+              <ConceptFigure page={activePage} src={encodeURI(assetUrl(activeEntry, "diagram"))} />
+            </section>
           )}
 
-          <article id="article" className={`markdown-body ${loading ? "is-loading" : ""}`}>
-            {loading ? (
-              <div className="reading-loader">
-                <span />
-                <span />
-                <span />
-                <p>正在翻到这一节…</p>
-              </div>
-            ) : (
-              <>
-                <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  pre: MarkdownPre,
-                  h1: ({ children }) => <h2 className="source-title">{children}</h2>,
-                  h2: ({ children }) => {
-                    const text = String(children).replace(/[*`]/g, "");
-                    const id = headingIds.get(text) ?? headingId(text);
-                    return <h2 id={id}>{children}</h2>;
-                  },
-                  h3: ({ children }) => {
-                    const text = String(children).replace(/[*`]/g, "");
-                    const id = headingIds.get(text) ?? headingId(text);
-                    return <h3 id={id}>{children}</h3>;
-                  },
-                  a: ({ href, children }) => (
-                    <a
-                      href={href?.startsWith("./") ? `${markdownBase}${href.slice(2)}` : href}
-                      onClick={(event) => onMarkdownLink(event, href)}
-                      target={href?.startsWith("http") ? "_blank" : undefined}
-                      rel={href?.startsWith("http") ? "noreferrer" : undefined}
-                    >
-                      {children}
-                    </a>
-                  ),
-                  img: ({ src, alt }) => {
-                    const resolved = src?.startsWith("./")
-                      ? `${markdownBase}${src.slice(2)}`
-                      : src;
-                    // The dedicated figure above provides a larger, captioned version.
-                    if (resolved?.includes("-concept.svg")) return null;
-                    // eslint-disable-next-line @next/next/no-img-element
-                    return <img src={resolved} alt={alt ?? ""} />;
-                  },
-                  code: ({ className, children }) => {
-                    const language = className?.replace("language-", "") || "text";
-                    return (
-                      <code className={className} data-language={language}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-                >
-                  {markdown}
-                </ReactMarkdown>
-
-                {mode === "note" && teacherParagraphs.length > 0 && (
-                  <section className="teacher-explanation" aria-labelledby="teacher-explanation-title">
-                    <div className="teacher-explanation-heading">
-                      <span className="section-kicker">老师补充讲解</span>
-                      <h2 id="teacher-explanation-title">把视频里的推导和例子一起保留下来</h2>
-                      <p>
-                        下面按音轨顺序整理老师的完整口头说明，并校正常见术语误识别。
-                        它不是另一份要点，而是用于补回正文压缩时容易遗漏的解释过程。
-                      </p>
-                    </div>
-                    <div className="teacher-transcript-flow">
-                      {teacherParagraphs.map((paragraph, index) => (
-                        <div className="teacher-paragraph" key={`${paragraph.time}-${index}`}>
-                          <time>{paragraph.time}</time>
-                          <p>{paragraph.text}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <p className="teacher-transcript-note">
-                      个别专有名词仍可能受原始识别影响；需要逐句确认时，可切换到“语音转写 ASR”。
-                    </p>
-                  </section>
-                )}
-              </>
-            )}
-          </article>
-
           <section className="lesson-check review-card" id="review">
-            <div className="review-heading">
-              <span className="section-kicker">06 / REVIEW</span>
-              <h2>学完自测</h2>
-              <p>能讲清、能判断、能行动，才算真的学会。</p>
+            <div className="review-header">
+              <div className="review-heading">
+                <span className="section-kicker">06 / REVIEW</span>
+                <h2>学完自测</h2>
+                <p>能讲清、能判断、能行动，才算真的学会。</p>
+              </div>
+              <div className="check-count">
+                <strong>{checks.filter(Boolean).length}</strong>
+                <span>/ {reviewChecklist.length}</span>
+              </div>
             </div>
-            {[
-              "我能不看视频解释本节核心概念",
-              "我能指出它在 RAG 数据流中的位置",
-              "我核对了原创图或完整 ASR",
-            ].map((label, index) => (
-              <label key={label}>
-                <input type="checkbox" checked={checks[index]} onChange={() => toggleCheck(index)} />
-                <span className="custom-check" aria-hidden="true">✓</span>
-                <span>{label}</span>
-              </label>
-            ))}
+            {reviewQuestions.length > 0 && (
+              <ol className="self-test">
+                {reviewQuestions.map((question, index) => (
+                  <li key={question}>
+                    <span>{index + 1}</span>
+                    <p>{question}</p>
+                  </li>
+                ))}
+              </ol>
+            )}
+            <div className="checklist">
+              {reviewChecklist.map((label, index) => (
+                <label key={label}>
+                  <input type="checkbox" checked={Boolean(checks[index])} onChange={() => toggleCheck(index)} />
+                  <span className="custom-check" aria-hidden="true">✓</span>
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
           </section>
 
           <nav className="lesson-pagination" aria-label="上一节和下一节">
@@ -755,48 +869,31 @@ export function StudyReader() {
           </nav>
         </main>
 
-        <aside className="reading-aside outline">
-          <section>
-            <span className="aside-kicker">ON THIS PAGE</span>
-            <h2>本页目录</h2>
-            <nav>
-              {headings.length ? (
-                headings.map((heading) => (
-                  <button
-                    key={heading.id}
-                    className={heading.level === 3 ? "nested" : ""}
-                    onClick={() => document.getElementById(heading.id)?.scrollIntoView({ behavior: "smooth" })}
-                  >
-                    {heading.text}
-                  </button>
-                ))
-              ) : (
-                <small>正在生成目录…</small>
-              )}
-            </nav>
-          </section>
-
-          <section>
-            <span className="aside-kicker orange">KEY TERMS</span>
-            <h2>本章术语</h2>
-            <div className="term-list">
-              {glossary.map((term) => (
-                <article key={term.label}>
-                  <strong>{term.label}</strong>
-                  <p>{term.text}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="next-card">
-            <span>学习建议</span>
-            <strong>先理解，再核对</strong>
-            <p>正文负责讲通概念；原创图负责建立关系；ASR 负责保留原声证据。</p>
-            <button onClick={() => setMode(mode === "note" ? "asr" : "note")}>
-              切换到{mode === "note" ? "完整 ASR" : "校正版笔记"} →
-            </button>
-          </section>
+        <aside className="reading-aside outline" aria-label="本页目录">
+          <span className="eyebrow-label">ON THIS PAGE</span>
+          <nav>
+            {[
+              ["summary", "先看结论"],
+              ["logic", "老师怎么讲"],
+              ["article", mode === "note" ? "完整讲解" : "语音转写"],
+              ...(mode === "note" ? [["diagram", "概念图"]] : []),
+              ["review", "学完自测"],
+            ].map(([id, label]) => (
+              <a key={id} href={`#${id}`}>
+                <span />
+                {label}
+              </a>
+            ))}
+          </nav>
+          <div className="outline-note">
+            <span>学习提示</span>
+            <p>先抓主线，再读完整解释、案例和老师的补充判断；概念图用于最后串起关系。</p>
+          </div>
+          <div className="mini-progress">
+            <span>课程进度</span>
+            <strong>{progress}%</strong>
+            <div><i style={{ width: `${progress}%` }} /></div>
+          </div>
         </aside>
       </div>
     </div>

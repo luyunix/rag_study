@@ -1852,6 +1852,32 @@ input:focus-visible {
   cursor: pointer;
 }
 
+.teacher-article {
+  padding-top: 8px;
+}
+
+.article-intro {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 28px;
+  margin-bottom: 34px;
+  padding: 22px 24px;
+  border-left: 3px solid var(--blue);
+  background: var(--blue-soft);
+}
+
+.article-intro strong {
+  color: var(--blue);
+  font-size: 13px;
+}
+
+.article-intro p {
+  margin: 0;
+  color: #536078;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
 .content-toolbar {
   margin-top: 8px;
 }
@@ -1997,6 +2023,39 @@ input:focus-visible {
   text-align: justify;
 }
 
+.diagram-card {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  align-items: center;
+  gap: 28px;
+  margin: 0 0 76px;
+  padding: 28px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #f0f3f6;
+}
+
+.diagram-copy h2 {
+  margin: 6px 0 0;
+  font-size: 19px;
+  letter-spacing: -0.025em;
+}
+
+.diagram-copy p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.diagram-card .concept-figure {
+  min-width: 0;
+  margin: 0;
+  padding: 20px 16px 14px;
+  border-radius: 14px;
+  background: white;
+}
+
 .lesson-check.review-card {
   display: grid;
   grid-template-columns: 1fr;
@@ -2006,6 +2065,69 @@ input:focus-visible {
   border: 1px solid var(--line);
   border-radius: 18px;
   background: #f4f6f8;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.check-count {
+  display: flex;
+  align-items: baseline;
+  align-self: start;
+  color: var(--muted);
+}
+
+.check-count strong {
+  color: var(--blue);
+  font-size: 30px;
+  letter-spacing: -0.05em;
+}
+
+.check-count span {
+  font-size: 12px;
+}
+
+.self-test {
+  display: grid;
+  margin: 28px 0;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  list-style: none;
+  gap: 14px;
+}
+
+.self-test li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+}
+
+.self-test li > span {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  border-radius: 7px;
+  background: white;
+  color: var(--blue);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.self-test p {
+  margin: 1px 0 0;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.checklist {
+  display: grid;
+  gap: 5px;
 }
 
 .lesson-check.review-card > .review-heading {
@@ -2032,6 +2154,11 @@ input:focus-visible {
   border-radius: 9px;
   font-size: 11px;
   line-height: 1.6;
+  cursor: pointer;
+}
+
+.lesson-check.review-card label:hover {
+  background: white;
 }
 
 .lesson-check.review-card input {
@@ -2083,6 +2210,90 @@ input:focus-visible {
   background: #fbfcfb;
 }
 
+.reading-aside.outline > .eyebrow-label {
+  display: block;
+}
+
+.reading-aside.outline > nav {
+  display: grid;
+  margin-top: 19px;
+  gap: 2px;
+}
+
+.reading-aside.outline > nav a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 0;
+  color: var(--muted);
+  font-size: 10px;
+  text-decoration: none;
+  transition: color 140ms ease;
+}
+
+.reading-aside.outline > nav a:hover {
+  color: var(--blue);
+}
+
+.reading-aside.outline > nav a span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #cbd2da;
+}
+
+.reading-aside.outline > nav a:hover span {
+  background: var(--blue);
+}
+
+.outline-note {
+  margin-top: 28px;
+  padding: 15px;
+  border-radius: 11px;
+  background: var(--blue-soft);
+}
+
+.outline-note p {
+  margin: 7px 0 0;
+  color: #566585;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.mini-progress {
+  margin-top: 28px;
+}
+
+.mini-progress strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 19px;
+}
+
+.mini-progress > div {
+  height: 4px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--line);
+}
+
+.mini-progress i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--blue);
+  transition: width 220ms ease;
+}
+
+#summary,
+#logic,
+#article,
+#diagram,
+#review {
+  scroll-margin-top: 98px;
+}
+
 .reading-aside.outline > section {
   margin-bottom: 28px;
   padding: 0;
@@ -2131,7 +2342,7 @@ input:focus-visible {
   color: #566585;
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1480px) {
   :root {
     --sidebar: 280px;
     --aside: 0px;
@@ -2346,7 +2557,7 @@ input:focus-visible {
   }
 
   .teacher-explanation {
-    padding: 26px 20px;
+    padding: 0;
   }
 
   .teacher-paragraph {
@@ -2365,6 +2576,18 @@ input:focus-visible {
   .lesson-check > div {
     grid-row: auto;
     margin-bottom: 10px;
+  }
+
+  .article-intro {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 18px;
+  }
+
+  .diagram-card {
+    grid-template-columns: 1fr;
+    margin-bottom: 58px;
+    padding: 20px;
   }
 }
 
