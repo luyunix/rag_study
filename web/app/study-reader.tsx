@@ -13,6 +13,7 @@ import {
 } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { ConceptFigure } from "./concept-figure";
 import { MermaidDiagram } from "./mermaid-diagram";
 
 type CatalogEntry = {
@@ -128,6 +129,28 @@ function extractHeadings(markdown: string): Heading[] {
     .slice(0, 12);
 }
 
+function plainMarkdown(value: string) {
+  return value
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/[`*_>#]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractConclusion(markdown: string) {
+  const match = markdown.match(
+    /##\s+这节到底讲什么\s*\n+([\s\S]*?)(?=\n##\s|$)/,
+  );
+  if (!match) return "先建立本节的核心判断，再沿着老师的推导、案例和边界条件完整理解。";
+
+  const paragraph = match[1]
+    .split(/\n\s*\n/)
+    .map(plainMarkdown)
+    .find((item) => item && !item.startsWith("←"));
+  return paragraph || "先建立本节的核心判断，再沿着老师的推导、案例和边界条件完整理解。";
+}
+
 function assetUrl(entry: CatalogEntry, kind: "note" | "asr" | "diagram") {
   const chapter = chapterFor(entry.page);
   const base = `/notes/${chapter.dir}`;
@@ -234,34 +257,36 @@ export function StudyReader() {
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const initial = Number(params.get("p"));
-    if (initial >= 1 && initial <= 89) setActivePage(initial);
-
-    const stored = window.localStorage.getItem("rag-study-completed");
-    if (stored) {
-      try {
-        setCompleted(new Set(JSON.parse(stored) as number[]));
-      } catch {
-        setCompleted(new Set());
+    const frame = window.requestAnimationFrame(() => {
+      const params = new URLSearchParams(window.location.search);
+      const initial = Number(params.get("p"));
+      if (initial >= 1 && initial <= 89) {
+        setActivePage(initial);
+        setExpandedChapter(chapterFor(initial).dir);
       }
-    }
+
+      const stored = window.localStorage.getItem("rag-study-completed");
+      if (stored) {
+        try {
+          setCompleted(new Set(JSON.parse(stored) as number[]));
+        } catch {
+          setCompleted(new Set());
+        }
+      }
+    });
 
     fetch("/data/course-catalog.json")
       .then((response) => response.json())
       .then((data: Catalog) => setCatalog(data));
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   const activeEntry = catalog?.entries.find((entry) => entry.page === activePage);
   const activeChapter = chapterFor(activePage);
 
   useEffect(() => {
-    setExpandedChapter(activeChapter.dir);
-  }, [activeChapter.dir]);
-
-  useEffect(() => {
     if (!activeEntry) return;
-    setLoading(true);
     fetch(encodeURI(assetUrl(activeEntry, mode)))
       .then((response) => {
         if (!response.ok) throw new Error("内容加载失败");
@@ -272,14 +297,15 @@ export function StudyReader() {
       .finally(() => setLoading(false));
 
     const storedChecks = window.localStorage.getItem(`rag-study-checks-${activeEntry.page}`);
-    setChecks(storedChecks ? JSON.parse(storedChecks) : [false, false, false]);
+    queueMicrotask(() =>
+      setChecks(storedChecks ? JSON.parse(storedChecks) : [false, false, false]),
+    );
     window.history.replaceState(null, "", `?p=${activeEntry.page}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [activeEntry, mode]);
 
   useEffect(() => {
     if (!activeEntry) return;
-    setTeacherTranscript("");
     fetch(encodeURI(assetUrl(activeEntry, "asr")))
       .then((response) => {
         if (!response.ok) throw new Error("转写加载失败");
@@ -306,7 +332,10 @@ export function StudyReader() {
   }, []);
 
   const selectPage = useCallback((page: number) => {
+    setLoading(true);
+    setTeacherTranscript("");
     setActivePage(page);
+    setExpandedChapter(chapterFor(page).dir);
     setMode("note");
     setSearch("");
     setSearchOpen(false);
@@ -327,6 +356,18 @@ export function StudyReader() {
   }, [catalog, search]);
 
   const headings = useMemo(() => extractHeadings(markdown), [markdown]);
+  const conclusion = useMemo(() => extractConclusion(markdown), [markdown]);
+  const logicSteps = useMemo(
+    () =>
+      headings
+        .filter(
+          (heading) =>
+            heading.level === 2 &&
+            !/这节到底讲什么|校正版讲解时间线|完整原声|自测/.test(heading.text),
+        )
+        .slice(0, 3),
+    [headings],
+  );
   const teacherParagraphs = useMemo(
     () => extractTeacherParagraphs(teacherTranscript),
     [teacherTranscript],
@@ -364,17 +405,19 @@ export function StudyReader() {
   };
 
   const markdownBase = activeEntry ? `/notes/${activeChapter.dir}/` : "/";
-  let headingIndex = 0;
+  const headingIds = new Map(headings.map((heading) => [heading.text, heading.id]));
 
   return (
-    <div className="reader-shell">
+    <div className="reader-shell course-app">
       <header className="topbar">
         <button
           className="menu-button"
           onClick={() => setMobileNav((open) => !open)}
           aria-label="打开课程目录"
         >
-          目录
+          <span />
+          <span />
+          <span />
         </button>
         <a className="brand" href="?p=1" onClick={(event) => { event.preventDefault(); selectPage(1); }}>
           <span className="brand-mark">R</span>
@@ -384,8 +427,14 @@ export function StudyReader() {
           </span>
         </a>
 
-        <div className="search-wrap">
-          <span className="search-icon">⌕</span>
+        <div className="course-stats" aria-label="课程概况">
+          <span>14 个章节</span>
+          <span>{catalog?.sections ?? 89} 节课</span>
+          <span>约 {Math.floor(totalMinutes / 60)} 小时</span>
+        </div>
+
+        <label className="search search-wrap">
+          <span className="search-icon" aria-hidden="true" />
           <input
             ref={searchRef}
             value={search}
@@ -397,9 +446,8 @@ export function StudyReader() {
             placeholder="搜索章节、概念或 P 编号"
             aria-label="搜索课程"
           />
-          <kbd>⌘ K</kbd>
           {searchOpen && search && (
-            <div className="search-results">
+            <div className="global-search-results">
               {filteredEntries.length ? (
                 filteredEntries.map((entry) => (
                   <button key={entry.page} onClick={() => selectPage(entry.page)}>
@@ -413,21 +461,31 @@ export function StudyReader() {
               )}
             </div>
           )}
-        </div>
+        </label>
 
-        <div className="top-progress">
-          <span>{completed.size} / {catalog?.sections ?? 89} 已完成</span>
-          <div className="progress-track"><i style={{ width: `${progress}%` }} /></div>
-          <strong>{progress}%</strong>
+        <div className="header-progress top-progress">
+          <span>{progress}%</span>
+          <small>已完成</small>
         </div>
       </header>
 
-      <div className="reader-layout">
-        <aside className={`course-sidebar ${mobileNav ? "is-open" : ""}`}>
-          <div className="sidebar-summary">
-            <span>完整课程</span>
-            <strong>14 章 · 89 节</strong>
-            <small>约 {Math.floor(totalMinutes / 60)} 小时 {totalMinutes % 60} 分钟</small>
+      <div className="reader-layout workspace">
+        <aside className={`course-sidebar sidebar ${mobileNav ? "is-open" : ""}`}>
+          <div className="sidebar-intro">
+            <div>
+              <span className="eyebrow-label">COURSE MAP</span>
+              <h2>课程目录</h2>
+            </div>
+            <div
+              className="progress-ring"
+              style={{
+                background: `conic-gradient(var(--blue) ${progress * 3.6}deg, var(--line) 0deg)`,
+              }}
+              aria-label={`课程完成度 ${progress}%`}
+            >
+              <span>{completed.size}</span>
+              <small>/ {catalog?.sections ?? 89}</small>
+            </div>
           </div>
           <nav aria-label="课程章节">
             {chapters.map((chapter, index) => {
@@ -482,7 +540,7 @@ export function StudyReader() {
 
         {mobileNav && <button className="nav-scrim" aria-label="关闭目录" onClick={() => setMobileNav(false)} />}
 
-        <main className="reading-pane">
+        <main className="reading-pane reader">
           <div className="breadcrumb">
             <span>第 {chapters.indexOf(activeChapter) + 1} 章</span>
             <i />
@@ -491,17 +549,26 @@ export function StudyReader() {
             <strong>P{String(activePage).padStart(3, "0")}</strong>
           </div>
 
-          <section className="article-hero">
-            <div className="eyebrow">
-              <span>校正版学习稿</span>
+          <header className="article-hero lesson-hero">
+            <div className="lesson-meta">
+              <span>第 {chapters.indexOf(activeChapter) + 1} 章</span>
+              <i />
+              <span>{activeChapter.title}</span>
+              <i />
               <span>{activeEntry?.duration ?? "—"}</span>
-              <span>{activeEntry?.asr_checked ? "已核对音轨" : "待核对"}</span>
             </div>
-            <h1>{activeEntry ? cleanTitle(activeEntry.title) : "正在载入课程目录"}</h1>
-            <p>
-              正文按老师的讲解顺序展开，保留推导、例子、补充说明和使用边界；
-              原创知识图负责建立结构，完整 ASR 负责逐句核对原声。
-            </p>
+            <div className="lesson-title-row">
+              <div className="lesson-index">
+                <span>LESSON</span>
+                <strong>{String(activePage).padStart(2, "0")}</strong>
+              </div>
+              <div>
+                <h1>{activeEntry ? cleanTitle(activeEntry.title) : "正在载入课程目录"}</h1>
+                <p>
+                  正文按老师的讲解顺序展开，保留推导、例子、反例、补充说明和使用边界。
+                </p>
+              </div>
+            </div>
             <div className="hero-actions">
               <button className={completed.has(activePage) ? "complete-button completed" : "complete-button"} onClick={toggleComplete}>
                 {completed.has(activePage) ? "✓ 已完成本节" : "标记为已完成"}
@@ -512,14 +579,57 @@ export function StudyReader() {
                 </a>
               )}
             </div>
+          </header>
+
+          <section className="conclusion-card" id="summary">
+            <div className="conclusion-kicker">
+              <span>01</span>
+              <strong>先看结论</strong>
+            </div>
+            <blockquote>{conclusion}</blockquote>
+          </section>
+
+          <section className="content-section logic-section" id="logic">
+            <div className="section-heading">
+              <div>
+                <span>02 / CORE LOGIC</span>
+                <h2>老师怎么一步步讲</h2>
+              </div>
+              <p>先用三条主线定位，再进入完整解释、案例和边界条件。</p>
+            </div>
+            <ol className="logic-steps">
+              {(logicSteps.length ? logicSteps : headings.slice(0, 3)).map((heading, index) => (
+                <li key={heading.id}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <button
+                    type="button"
+                    onClick={() => document.getElementById(heading.id)?.scrollIntoView({ behavior: "smooth" })}
+                  >
+                    {heading.text}
+                  </button>
+                </li>
+              ))}
+            </ol>
           </section>
 
           <div className="content-toolbar">
             <div className="mode-tabs" role="tablist" aria-label="阅读模式">
-              <button className={mode === "note" ? "active" : ""} onClick={() => setMode("note")}>
+              <button
+                className={mode === "note" ? "active" : ""}
+                onClick={() => {
+                  setLoading(true);
+                  setMode("note");
+                }}
+              >
                 完整讲解
               </button>
-              <button className={mode === "asr" ? "active" : ""} onClick={() => setMode("asr")}>
+              <button
+                className={mode === "asr" ? "active" : ""}
+                onClick={() => {
+                  setLoading(true);
+                  setMode("asr");
+                }}
+              >
                 语音转写 ASR
               </button>
             </div>
@@ -527,17 +637,10 @@ export function StudyReader() {
           </div>
 
           {mode === "note" && activeEntry && (
-            <figure className="concept-figure">
-              <div className="figure-label">
-                <span>原创知识图</span>
-                <small>P{String(activePage).padStart(3, "0")}</small>
-              </div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={encodeURI(assetUrl(activeEntry, "diagram"))} alt={`P${activePage} 原创知识图`} />
-            </figure>
+            <ConceptFigure page={activePage} src={encodeURI(assetUrl(activeEntry, "diagram"))} />
           )}
 
-          <article className={`markdown-body ${loading ? "is-loading" : ""}`}>
+          <article id="article" className={`markdown-body ${loading ? "is-loading" : ""}`}>
             {loading ? (
               <div className="reading-loader">
                 <span />
@@ -553,13 +656,13 @@ export function StudyReader() {
                   pre: MarkdownPre,
                   h1: ({ children }) => <h2 className="source-title">{children}</h2>,
                   h2: ({ children }) => {
-                    const id = headings[headingIndex]?.id ?? headingId(String(children), headingIndex);
-                    headingIndex += 1;
+                    const text = String(children).replace(/[*`]/g, "");
+                    const id = headingIds.get(text) ?? headingId(text);
                     return <h2 id={id}>{children}</h2>;
                   },
                   h3: ({ children }) => {
-                    const id = headings[headingIndex]?.id ?? headingId(String(children), headingIndex);
-                    headingIndex += 1;
+                    const text = String(children).replace(/[*`]/g, "");
+                    const id = headingIds.get(text) ?? headingId(text);
                     return <h3 id={id}>{children}</h3>;
                   },
                   a: ({ href, children }) => (
@@ -621,10 +724,11 @@ export function StudyReader() {
             )}
           </article>
 
-          <section className="lesson-check">
-            <div>
-              <span className="section-kicker">读完检查</span>
-              <h2>把“看懂了”变成能说出来</h2>
+          <section className="lesson-check review-card" id="review">
+            <div className="review-heading">
+              <span className="section-kicker">06 / REVIEW</span>
+              <h2>学完自测</h2>
+              <p>能讲清、能判断、能行动，才算真的学会。</p>
             </div>
             {[
               "我能不看视频解释本节核心概念",
@@ -633,6 +737,7 @@ export function StudyReader() {
             ].map((label, index) => (
               <label key={label}>
                 <input type="checkbox" checked={checks[index]} onChange={() => toggleCheck(index)} />
+                <span className="custom-check" aria-hidden="true">✓</span>
                 <span>{label}</span>
               </label>
             ))}
@@ -650,7 +755,7 @@ export function StudyReader() {
           </nav>
         </main>
 
-        <aside className="reading-aside">
+        <aside className="reading-aside outline">
           <section>
             <span className="aside-kicker">ON THIS PAGE</span>
             <h2>本页目录</h2>
