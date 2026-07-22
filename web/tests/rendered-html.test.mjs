@@ -37,7 +37,7 @@ test("server-renders the RAG Study reader", async () => {
   assert.match(html, /完整讲解/);
   assert.match(html, /先看结论/);
   assert.match(html, /老师怎么一步步讲/);
-  assert.match(html, /把老师的方法用到项目里/);
+  assert.match(html, /把本节方法用到项目里/);
   assert.match(html, /关键术语与判断边界/);
   assert.match(html, /学完自测/);
   assert.match(html, /保留推导、例子、(?:反例、)?补充说明和使用边界/);
@@ -117,10 +117,13 @@ test("indexes every lesson body and restores a sensible reading position", async
   assert.match(searchIndex.find((entry) => entry.page === 75).text, /图数据库|图查询/);
   assert.match(reader, /const \[activePage, setActivePage\] = useState\(1\)/);
   assert.match(reader, /rag-study-last-page/);
-  assert.match(reader, /老师的补充说明与完整推导/);
+  assert.match(reader, /正常阅读只展示人工整理的校正版讲解/);
+  assert.match(reader, /不作为事实依据；请以同节校正版完整讲解为准/);
+  assert.doesNotMatch(reader, /extractTeacherTranscript/);
+  assert.doesNotMatch(reader, /老师的补充说明与完整推导/);
   assert.match(reader, /glossaryByChapter/);
-  assert.match(reader, /老师提醒的边界与坑/);
-  assert.match(reader, /omittedSegments/);
+  assert.match(reader, /需要注意的边界与坑/);
+  assert.doesNotMatch(searchIndex.find((entry) => entry.page === 48).text, /GPXGO|删下文/);
   assert.match(packageJson, /"prebuild": "npm run content:index"/);
   assert.match(graphLesson, /节点类型对齐/);
   assert.match(graphLesson, /query_level/);

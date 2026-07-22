@@ -37,23 +37,6 @@ type Heading = {
   id: string;
 };
 
-type TeacherParagraph = {
-  start: number;
-  end: number;
-  text: string;
-};
-
-type TeacherSection = {
-  title: string;
-  time: string;
-  paragraphs: TeacherParagraph[];
-};
-
-type TeacherTranscript = {
-  sections: TeacherSection[];
-  omittedSegments: number;
-};
-
 type SearchIndexEntry = {
   page: number;
   title: string;
@@ -299,153 +282,6 @@ function MarkdownPre({ children }: { children?: ReactNode }) {
   return <pre>{children}</pre>;
 }
 
-const transcriptCorrections: [RegExp, string][] = [
-  [/\b(?:IG-AS|IGAS|RAG-AS)\b/gi, "Ragas"],
-  [/\bIG\b/g, "RAG"],
-  [/大[远原圆员业]模型/g, "大语言模型"],
-  [/删下文|善下文|善加文|上下完/g, "上下文"],
-  [/中时性|中石性|中实性|中程度/g, "忠实性"],
-  [/减锁/g, "检索"],
-  [/招回|招肥|招呼/g, "召回"],
-  [/孕妇/g, "用户"],
-  [/生存/g, "生成"],
-  [/Inventive|inbattery/gi, "Embedding"],
-  [/Jensen/gi, "JSON"],
-  [/数据级|数据机|data-side/gi, "数据集"],
-  [/GT关注|关注标准答案|官处标准答案/g, "ground truth 标准答案"],
-  [/寒浮其持/g, "含糊其辞"],
-  [/余选相似度|逾选相似度/g, "余弦相似度"],
-  [/闯入/g, "传入"],
-  [/便利问题列表/g, "遍历问题列表"],
-];
-
-function cleanTranscriptText(text: string) {
-  return transcriptCorrections
-    .reduce((value, [pattern, replacement]) => value.replace(pattern, replacement), text)
-    .replace(/\s+/g, " ")
-    .replace(/\s+([，。！？；：])/g, "$1")
-    .trim();
-}
-
-function transcriptSeconds(value: string) {
-  const [hours, minutes, seconds] = value.split(":").map(Number);
-  return hours * 3600 + minutes * 60 + seconds;
-}
-
-function displayTranscriptTime(seconds: number) {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainder = seconds % 60;
-  return hours
-    ? `${hours}:${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`
-    : `${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`;
-}
-
-function isTranscriptNoise(text: string) {
-  if (!text || text.includes("�")) return true;
-
-  const phrases = text
-    .split(/[，。！？；、]/)
-    .map((item) => item.trim().toLowerCase())
-    .filter(Boolean);
-  if (phrases.length >= 8 && new Set(phrases).size / phrases.length < 0.35) return true;
-
-  const words = text.toLowerCase().match(/[a-z][a-z0-9-]*/g) ?? [];
-  if (words.length >= 10) {
-    const counts = new Map<string, number>();
-    words.forEach((word) => counts.set(word, (counts.get(word) ?? 0) + 1));
-    if (Math.max(...counts.values()) / words.length > 0.55) return true;
-  }
-
-  return false;
-}
-
-function joinTranscriptText(left: string, right: string) {
-  if (!left) return right;
-  return /[。！？；：]$/.test(left) ? `${left}${right}` : `${left}；${right}`;
-}
-
-function extractTeacherTranscript(asr: string, requestedTitles: string[]): TeacherTranscript {
-  const segments: TeacherParagraph[] = [];
-  let currentStart = 0;
-  let currentEnd = 0;
-  let started = false;
-  let omittedSegments = 0;
-
-  for (const rawLine of asr.split("\n")) {
-    const line = rawLine.trim();
-    const timestamp = line.match(
-      /^##\s+(\d{2}:\d{2}:\d{2})[–-](\d{2}:\d{2}:\d{2})/,
-    );
-
-    if (timestamp) {
-      started = true;
-      currentStart = transcriptSeconds(timestamp[1]);
-      currentEnd = transcriptSeconds(timestamp[2]);
-      continue;
-    }
-
-    if (!started || !line || line.startsWith("#") || line.startsWith(">")) continue;
-    const text = cleanTranscriptText(line);
-    if (isTranscriptNoise(text)) {
-      omittedSegments += 1;
-      continue;
-    }
-    segments.push({ start: currentStart, end: currentEnd, text });
-  }
-
-  const paragraphs: TeacherParagraph[] = [];
-  let block: TeacherParagraph | null = null;
-
-  for (const segment of segments) {
-    if (!block) {
-      block = { ...segment };
-      continue;
-    }
-
-    if (block.text.length < 300) {
-      block.text = joinTranscriptText(block.text, segment.text);
-      block.end = segment.end;
-    } else {
-      paragraphs.push(block);
-      block = { ...segment };
-    }
-  }
-
-  if (block) paragraphs.push(block);
-
-  if (!paragraphs.length) return { sections: [], omittedSegments };
-
-  const fallbackTitles = [
-    "先交代问题、目标与背景",
-    "接着拆解方法和实现过程",
-    "再用例子验证关键判断",
-    "最后说明结果、限制与下一步",
-  ];
-  const titles = requestedTitles
-    .map((title) => title.replace(/^\d+[.、]\s*/, "").trim())
-    .filter(Boolean)
-    .slice(0, 5);
-  const sectionCount = Math.min(
-    paragraphs.length,
-    Math.max(3, Math.min(5, titles.length || fallbackTitles.length)),
-  );
-  const sections = Array.from({ length: sectionCount }, (_, index) => {
-    const startIndex = Math.floor((index * paragraphs.length) / sectionCount);
-    const endIndex = Math.floor(((index + 1) * paragraphs.length) / sectionCount);
-    const sectionParagraphs = paragraphs.slice(startIndex, endIndex);
-    const first = sectionParagraphs[0];
-    const last = sectionParagraphs.at(-1) ?? first;
-    return {
-      title: titles[index] ?? fallbackTitles[index] ?? `第 ${index + 1} 段讲解`,
-      time: `${displayTranscriptTime(first.start)}–${displayTranscriptTime(last.end)}`,
-      paragraphs: sectionParagraphs,
-    };
-  });
-
-  return { sections, omittedSegments };
-}
-
 function searchSnippet(text: string, term: string) {
   if (!text) return "";
   const normalized = text.toLowerCase();
@@ -463,7 +299,6 @@ export function StudyReader() {
   const [mode, setMode] = useState<"note" | "asr">("note");
   const [markdown, setMarkdown] = useState("");
   const [noteMarkdown, setNoteMarkdown] = useState("");
-  const [teacherTranscript, setTeacherTranscript] = useState("");
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
@@ -552,17 +387,6 @@ export function StudyReader() {
   }, [activeEntry, mode]);
 
   useEffect(() => {
-    if (!activeEntry) return;
-    fetch(encodeURI(assetUrl(activeEntry, "asr")))
-      .then((response) => {
-        if (!response.ok) throw new Error("转写加载失败");
-        return response.text();
-      })
-      .then((text) => setTeacherTranscript(text))
-      .catch(() => setTeacherTranscript(""));
-  }, [activeEntry]);
-
-  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
@@ -581,7 +405,6 @@ export function StudyReader() {
   const selectPage = useCallback((page: number) => {
     setLoading(true);
     setNoteMarkdown("");
-    setTeacherTranscript("");
     setActivePage(page);
     setExpandedChapter(chapterFor(page).dir);
     setMode("note");
@@ -625,14 +448,6 @@ export function StudyReader() {
     },
     [headings],
   );
-  const teacherSectionTitles = useMemo(
-    () => headings.filter((heading) => heading.level === 3).map((heading) => heading.text).slice(0, 5),
-    [headings],
-  );
-  const teacherExplanation = useMemo(
-    () => extractTeacherTranscript(teacherTranscript, teacherSectionTitles),
-    [teacherSectionTitles, teacherTranscript],
-  );
   const displayMarkdown = useMemo(
     () => (mode === "note" ? explanationMarkdown(markdown) : markdown),
     [markdown, mode],
@@ -644,7 +459,7 @@ export function StudyReader() {
   const projectApplication = useMemo(
     () => compactSection(
       lessonMarkdown,
-      /用一个例子|案例|实战|动手|最小可运行代码/,
+      /用一个例子|迁移示例|示例|案例|实战|动手|最小可运行代码/,
       "把本节方法放进一个真实问题中，记录输入、召回证据、模型回答和失败样本，再用本节自测检查每一步是否成立。",
     ),
     [lessonMarkdown],
@@ -985,7 +800,7 @@ export function StudyReader() {
               <p>
                 {mode === "note"
                   ? "按老师的讲解顺序还原为什么得出结论、用了什么例子、指标之间怎样区分，以及结论在什么条件下成立。"
-                  : "ASR 保留完整口头讲解和时间位置；遇到专有名词误识别时，以校正版完整讲解为准。"}
+                  : "ASR 保留完整口头讲解和时间位置，但可能含同音字、断句和术语误识别，不作为事实依据；请以同节校正版完整讲解为准。"}
               </p>
             </div>
 
@@ -1046,47 +861,11 @@ export function StudyReader() {
                     {displayMarkdown}
                   </ReactMarkdown>
 
-                  {mode === "note" && teacherExplanation.sections.length > 0 && (
-                    <section className="teacher-explanation" aria-labelledby="teacher-explanation-title">
-                      <div className="teacher-explanation-heading">
-                        <span className="section-kicker">按原声补全</span>
-                        <h2 id="teacher-explanation-title">老师的补充说明与完整推导</h2>
-                        <p>
-                          下面按时间段继续还原老师的口头推导、例子、操作细节和补充判断；每段都能回到原声核对。
-                        </p>
-                      </div>
-                      <div className="teacher-transcript-flow">
-                        {teacherExplanation.sections.map((section, sectionIndex) => (
-                          <section className="teacher-transcript-section" key={`${section.time}-${sectionIndex}`}>
-                            <div className="teacher-transcript-section-heading">
-                              <span>{String(sectionIndex + 1).padStart(2, "0")}</span>
-                              <div>
-                                <h3>{section.title}</h3>
-                                <time>{section.time}</time>
-                              </div>
-                            </div>
-                            {section.paragraphs.map((paragraph, paragraphIndex) => (
-                              <p className="teacher-paragraph" key={`${paragraph.start}-${paragraphIndex}`}>
-                                <a
-                                  href={activeEntry?.url}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  aria-label={`打开原视频，定位参考时间 ${displayTranscriptTime(paragraph.start)}`}
-                                >
-                                  {displayTranscriptTime(paragraph.start)}
-                                </a>
-                                <span>{paragraph.text}</span>
-                              </p>
-                            ))}
-                          </section>
-                        ))}
-                      </div>
-                      <p className="teacher-transcript-note">
-                        {teacherExplanation.omittedSegments > 0
-                          ? `已跳过 ${teacherExplanation.omittedSegments} 个明显重复或损坏的识别片段；其余内容按原声顺序完整保留。`
-                          : "个别专有名词仍可能受原始识别影响；需要逐句确认时，可切换到“语音转写 ASR”。"}
-                      </p>
-                    </section>
+                  {mode === "note" && (
+                    <aside className="teacher-transcript-note" aria-label="内容校对说明">
+                      正常阅读只展示人工整理的校正版讲解；老师的推导、例子、操作细节和边界说明已尽量写入对应正文。
+                      “语音转写 ASR”保留原始识别结果供逐句核对，可能含同音字和专有名词误识别，不作为事实依据。
+                    </aside>
                   )}
                 </>
               )}
@@ -1109,7 +888,7 @@ export function StudyReader() {
               <div className="section-heading project-layer-heading">
                 <div>
                   <span>04 / APPLY &amp; VERIFY</span>
-                  <h2>把老师的方法用到项目里</h2>
+                  <h2>把本节方法用到项目里</h2>
                 </div>
                 <p>不仅记概念，还要知道怎么落地、在哪些条件下会失效。</p>
               </div>
@@ -1121,7 +900,7 @@ export function StudyReader() {
                 </article>
                 <article className="pitfall-card">
                   <span>WATCH OUT</span>
-                  <h3>老师提醒的边界与坑</h3>
+                  <h3>需要注意的边界与坑</h3>
                   <p>{projectPitfall}</p>
                 </article>
               </div>

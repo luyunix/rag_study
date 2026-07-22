@@ -46,16 +46,16 @@ const index = await Promise.all(
     if (!chapter) throw new Error(`Missing chapter mapping for P${entry.page}`);
 
     const lessonDir = path.join(publicRoot, "notes", chapter.dir);
-    const [note, asr] = await Promise.all([
-      readFile(path.join(lessonDir, `${entry.stem}.md`), "utf8"),
-      readFile(path.join(lessonDir, "transcripts", `${entry.stem}-ASR.md`), "utf8"),
-    ]);
+    const note = await readFile(path.join(lessonDir, `${entry.stem}.md`), "utf8");
 
     return {
       page: entry.page,
       title: entry.title,
       stem: entry.stem,
-      text: plainText(`${note}\n${asr}`),
+      // Search the manually curated lesson only. Raw ASR remains available in
+      // its own tab, but indexing it would surface known recognition errors as
+      // if they were verified terminology.
+      text: plainText(note),
     };
   }),
 );

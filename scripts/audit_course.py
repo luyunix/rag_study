@@ -67,6 +67,7 @@ def main() -> int:
         errors.append(f"search index: expected 89 lessons, found {len(search_index)}")
 
     indexed_pages = {entry["page"] for entry in search_index}
+    example_bodies: dict[str, list[str]] = {}
     for entry in entries:
         page = entry["page"]
         label = f"P{page:03d}"
@@ -103,6 +104,9 @@ def main() -> int:
         if source_diagram.is_file() and source_diagram.read_text() != diagram:
             errors.append(f"{label}: source diagram and published diagram differ")
 
+        if "不作为事实依据" not in asr or "同节“完整讲解”的人工校正版" not in asr:
+            errors.append(f"{label}: ASR does not clearly defer to the same lesson's curated explanation")
+
         for heading in ("## 这节到底讲什么", "## 自测", "## 学完检查"):
             if heading not in note:
                 errors.append(f"{label}: missing section {heading}")
@@ -112,6 +116,18 @@ def main() -> int:
             errors.append(f"{label}: fewer than three explanatory subsections")
         if visible_characters(note) < 500:
             errors.append(f"{label}: structured note is too short")
+
+        for match in re.finditer(
+            r"^##\s+(用一个例子串起来|课后迁移示例（非视频原例）)\s*\n+"
+            r"([\s\S]*?)(?=\n##\s|\Z)",
+            note,
+            re.MULTILINE,
+        ):
+            heading, body = match.groups()
+            normalized = re.sub(r"\s+", " ", body).strip()
+            example_bodies.setdefault(normalized, []).append(label)
+            if heading.startswith("课后迁移示例") and "不是老师在本节视频中逐字讲述的原例" not in body:
+                errors.append(f"{label}: non-video example lacks an explicit source label")
 
         timestamps = re.findall(
             r"^##\s+\d{2}:\d{2}:\d{2}[–-](\d{2}:\d{2}:\d{2})",
@@ -136,10 +152,16 @@ def main() -> int:
         if page not in indexed_pages:
             errors.append(f"{label}: missing from full-text search index")
 
+    for body, labels in example_bodies.items():
+        if len(labels) > 1 and "不是老师在本节视频中逐字讲述的原例" not in body:
+            errors.append(
+                f"examples: repeated unlabeled example in {', '.join(labels)}: {body[:80]!r}"
+            )
+
     app = (WEB / "app" / "study-reader.tsx").read_text()
     for marker in (
-        "老师的补充说明与完整推导",
-        "把老师的方法用到项目里",
+        "正常阅读只展示人工整理的校正版讲解",
+        "把本节方法用到项目里",
         "关键术语与判断边界",
         "glossaryByChapter",
         "course-search.json",
@@ -149,6 +171,14 @@ def main() -> int:
     ):
         if marker not in app:
             errors.append(f"frontend: missing required behavior marker {marker!r}")
+    for unsafe_marker in ("extractTeacherTranscript", "老师的补充说明与完整推导"):
+        if unsafe_marker in app:
+            errors.append(f"frontend: raw ASR is still presented as verified explanation: {unsafe_marker!r}")
+
+    indexed_text = "\n".join(str(entry.get("text", "")) for entry in search_index)
+    for asr_error in ("GPXGO", "删下文", "大园模型"):
+        if asr_error in indexed_text:
+            errors.append(f"search index: contains known raw-ASR error {asr_error!r}")
 
     graph_lesson = (
         PUBLIC_NOTES
@@ -166,8 +196,8 @@ def main() -> int:
         return 1
 
     print(
-        "Course audit passed: 89 notes, 89 timestamped ASR transcripts, "
-        "89 readable concept diagrams, and 89 full-text search records."
+        "Course audit passed: 89 curated notes, 89 separately labeled timestamped ASR transcripts, "
+        "89 readable concept diagrams, and 89 curated-note search records."
     )
     return 0
 
